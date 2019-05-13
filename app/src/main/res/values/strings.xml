@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Mishi Creation Admin</string>
+
+
+    /* for third party app opener util class -- including strings for app share, etc. */
+    <string name="need_permission">Need Permission</string>
+    <string name="please_wait">Please wait</string>
+    <string name="share_app_exception">Unable to share</string>
+    <string name="invite_with">Invite with</string>
+    <string name="please_add_motivation">Please add motivation</string>
+    <string name="please_start_workout">Please start workout</string>
+    <string name="app_share_name">Workout Interval Timer</string>
+    <string name="enter_audio_name">Enter audio name</string>
+    <string name="no_audio_recorded">No Audio Recorded</string>
+    <string name="default_audio_prefix">default_</string>
+    <string name="save_changes_in_workout">Save changes in workout</string>
+    <string name="save_changes_in_audio">Save changes in audio</string>
+    <string name="no_browser">No browser</string>
+    <string name="no_app">No app</string>
+    <string name="cancel">Cancel</string>
+
+    // for internet dialog
+    <string name="no_internet_available">No internet available</string>
+    <string name="delete">Delete</string>
+    <string name="suggestion">Suggestion</string>
+    <string name="Bug">Bug</string>
+    <string name="Help">Help</string>
+    <string name="choose_subject">Choose subject</string>
+    <string name="proceed">Proceed</string>
+    <string name="try_again">Try Again</string>
+    <string name="ok">Ok</string>
+    <string name="manage_workout">Manage Workout</string>
+    <string name="manage">Manage</string>
+
+
+</resources>
