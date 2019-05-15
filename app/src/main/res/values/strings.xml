@@ -32,5 +32,9 @@
     <string name="manage_workout">Manage Workout</string>
     <string name="manage">Manage</string>
 
+    <string name="fetching_products">Fetching products...</string>
+    <string name="fetching_categories">Fetching categories...</string>
+    <string name="creating_category">Creating category...</string>
+
 
 </resources>

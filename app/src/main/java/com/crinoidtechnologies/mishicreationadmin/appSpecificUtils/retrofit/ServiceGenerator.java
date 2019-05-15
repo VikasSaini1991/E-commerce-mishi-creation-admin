@@ -163,14 +163,14 @@ public class ServiceGenerator {
 //        httpClient.addInterceptor(logging);
 //        }
 
-        if (!TextUtils.isEmpty(authToken)) {
+        if (!TextUtils.isEmpty("application/json")) {
             // AuthenticationInterceptor interceptor = new AuthenticationInterceptor(authToken);
             httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request.Builder request = chain.request().newBuilder();
-                    if (!TextUtils.isEmpty(authToken)) {
-                        request.addHeader("authorization", "Bearer " + authToken);
+                    if (!TextUtils.isEmpty("application/json")) {
+                        request.addHeader("Content-Type","application/json");
                     }
                     //  return chain.proceed(request.build());
 
