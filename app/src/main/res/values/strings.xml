@@ -35,6 +35,13 @@
     <string name="fetching_products">Fetching products...</string>
     <string name="fetching_categories">Fetching categories...</string>
     <string name="creating_category">Creating category...</string>
+    <string name="creating_product">Creating product...</string>
+    <string name="updating_category">Updating category...</string>
+    <string name="updating_product">Updating product...</string>
+    <string name="deleting_category">Deleting category...</string>
+    <string name="deleting_product">Deleting product...</string>
+    <string name="fetching_orders">Fetching orders...</string>
+    <string name="deleting_order">Deleting order...</string>
 
 
 </resources>

@@ -14,10 +14,16 @@ public class InsertCategoryData {
     @SerializedName("image")
     @Expose
     private Image image;
+    @SerializedName("description")
+    @Expose
+    private String description;
 
-    public InsertCategoryData(String name, Image image) {
+
+
+    public InsertCategoryData(String name, Image image, String description) {
         this.name = name;
         this.image=image;
+        this.description=description;
     }
 
     public String getName() {
@@ -36,4 +42,11 @@ public class InsertCategoryData {
         this.image = image;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

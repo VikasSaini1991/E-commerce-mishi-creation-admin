@@ -16,6 +16,10 @@ public class Category {
     @Expose
     private String slug;
 
+    public Category(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }
