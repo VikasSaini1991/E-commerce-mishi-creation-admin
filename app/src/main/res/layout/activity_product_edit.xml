@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    tools:context=".activities.ProductEditActivity">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/b_change"
+            android:textColor="@color/white_color"
+            android:background="@drawable/edit_button_background"
+            android:layout_centerInParent="true"/>
+        <ImageView
+            android:id="@+id/product_edit_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/logo"/>
+        <EditText
+            android:id="@+id/product_edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/product_edit_image"
+            />
+        <EditText
+            android:id="@+id/product_edit_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/product_edit_name"/>
+    </RelativeLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/b_product_edit_save"
+        android:textColor="@color/white_color"
+        android:background="@drawable/edit_button_background"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.CategoryEditActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        >
+        <Button
+            android:id="@+id/b_category_edit_change_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/change"
+            android:textColor="@color/white_color"
+            android:background="@drawable/edit_button_background"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+
+            android:id="@+id/image_change"
+            android:padding="25dp"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            android:src="@drawable/logo"
+            android:layout_centerInParent="true"
+
+            />
+        <EditText
+            android:id="@+id/title_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/image_change"
+            />
+    </RelativeLayout>
+
+
+
+        <Button
+            android:id="@+id/save_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="@string/b_save_category"
+            android:textColor="@color/white_color"
+            android:background="@drawable/edit_button_background"/>
+
+
+</RelativeLayout>
