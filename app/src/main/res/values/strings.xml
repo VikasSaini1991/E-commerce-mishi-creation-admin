@@ -59,6 +59,7 @@
     <string name="b_create_new_product">Create New Product</string>
     <string name="b_save_category">Save</string>
     <string name="product_edit">Product Edit</string>
+    <string name="pickUp">Pickup</string>
 
 
 </resources>

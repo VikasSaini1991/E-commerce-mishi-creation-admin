@@ -87,13 +87,13 @@ public class AllOrders extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled( true );
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle( "All Orders" );
     orderDataList= new ArrayList<>(  );
-    orderDataList.add( new OrderData( "vikas","bhiwani","5","123456","200.50" ) );
+    orderDataList.add( new OrderData( "vikas","bhiwani","5","9355529720","200.50" ) );
         orderDataList.add( new OrderData( "vikas","bhiwani","4","123456","200.50" ) );
-        orderDataList.add( new OrderData( "Rahul","bhiwani","3","123456","200.50" ) );
-        orderDataList.add( new OrderData( "Akshay","bhiwani","2","123456","200.50" ) );
+        orderDataList.add( new OrderData( "Rahul","bhiwani","3","9812644069","200.50" ) );
+        orderDataList.add( new OrderData( "Akshay","bhiwani","2","9138176259","200.50" ) );
         orderDataList.add( new OrderData( "vivek","bhiwani","8","123456","200.50" ) );
         orderDataList.add( new OrderData( "shryansh","bhiwani","1","123456","200.50" ) );
-        orderDataList.add( new OrderData( "suhbam","bhiwani","3","123456","200.50" ) );
+        orderDataList.add( new OrderData( "suhbam","bhiwani","3","8059495249","200.50" ) );
         orderDataList.add( new OrderData( "nand","bhiwani","4","123456","200.50" ) );
         orderDataList.add( new OrderData( "vinod","bhiwani","3","123456","200.50" ) );
 
