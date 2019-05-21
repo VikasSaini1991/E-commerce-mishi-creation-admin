@@ -12,33 +12,35 @@
         android:layout_margin="50dp"
         >
         <Button
+            android:id="@+id/b_change_product_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/b_change"
+            android:text="@string/change"
             android:textColor="@color/white_color"
             android:background="@drawable/edit_button_background"
             android:layout_centerInParent="true"/>
         <ImageView
-            android:id="@+id/product_edit_image"
+            android:id="@+id/iv_product_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:src="@drawable/logo"/>
         <EditText
-            android:id="@+id/product_edit_name"
+            android:id="@+id/et_product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/product_edit_image"
+            android:layout_below="@id/iv_product_image"
             />
         <EditText
-            android:id="@+id/product_edit_price"
+            android:id="@+id/et_product_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/product_edit_name"/>
+            android:layout_below="@id/et_product_name"/>
     </RelativeLayout>
     <Button
+        android:id="@+id/b_product_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/b_product_edit_save"
+        android:text="@string/product_edit_save"
         android:textColor="@color/white_color"
         android:background="@drawable/edit_button_background"
         android:textSize="20sp"

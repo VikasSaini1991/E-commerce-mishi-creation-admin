@@ -15,15 +15,16 @@ import android.widget.TextView;
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.activities.OrderDetailsActivity;
 import com.crinoidtechnologies.mishicreationadmin.models.OrderData;
+import com.crinoidtechnologies.mishicreationadmin.utils.Constants;
 
 import java.util.List;
 import java.util.zip.Inflater;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
-    Context context;
-    List<OrderData> orderDataList;
-    Activity activity;
-    Fragment fragment;
+    public Context context;
+    private List<OrderData> orderDataList;
+    public Activity activity;
+    public Fragment fragment;
 
     public OrderAdapter(Context context, List<OrderData> orderDataList, Activity activity, Fragment fragment) {
         this.context = context;
@@ -35,7 +36,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     @NonNull
     @Override
     public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view= LayoutInflater.from( viewGroup.getContext() ).inflate( R.layout.order_card_list_view,viewGroup,false );
+        View view = LayoutInflater.from( viewGroup.getContext() ).inflate( R.layout.order_card_list_view, viewGroup, false );
 
         return new OrderViewHolder( view );
     }
@@ -50,12 +51,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         orderViewHolder.cvOrder.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent( fragment.getActivity(), OrderDetailsActivity.class );
-                intent.putExtra( "userName",orderDataList.get( i ).getUserName() );
-                intent.putExtra( "userAddress",orderDataList.get( i ).getUserAddress() );
-                intent.putExtra( "userSProduct",orderDataList.get( i ).getUserSProduct() );
-                intent.putExtra( "userPhoneNo",orderDataList.get( i ).getUserPhoneNo() );
-                intent.putExtra( "userTotalPrice",orderDataList.get( i ).getUserTotalPrice() );
+                Intent intent = new Intent( fragment.getActivity(), OrderDetailsActivity.class );
+                intent.putExtra( Constants.NAME, orderDataList.get( i ).getUserName() );
+                intent.putExtra( Constants.ADDRESS, orderDataList.get( i ).getUserAddress() );
+                intent.putExtra( Constants.S_PRODUCT, orderDataList.get( i ).getUserSProduct() );
+                intent.putExtra( Constants.PHONE_NO, orderDataList.get( i ).getUserPhoneNo() );
+                intent.putExtra( Constants.TOTAL_PRICE, orderDataList.get( i ).getUserTotalPrice() );
                 fragment.getActivity().startActivity( intent );
 
             }
@@ -69,16 +70,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     }
 
     public class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUserName,tvUserAddress,tvUserSProduct,tvUserPhoneNo,tvTotalPrice;
-        CardView cvOrder;
+        private TextView tvUserName, tvUserAddress, tvUserSProduct, tvUserPhoneNo, tvTotalPrice;
+        private CardView cvOrder;
+
         public OrderViewHolder(@NonNull View itemView) {
             super( itemView );
-            tvUserName=itemView.findViewById( R.id.user_name);
-            tvUserAddress=itemView.findViewById( R.id.user_address );
-            tvUserSProduct=itemView.findViewById( R.id.user_s_product );
-            tvUserPhoneNo=itemView.findViewById( R.id.user_phone_no );
-            tvTotalPrice=itemView.findViewById( R.id.user_total_price );
-            cvOrder=itemView.findViewById( R.id.cv_order );
+            tvUserName = itemView.findViewById( R.id.user_name );
+            tvUserAddress = itemView.findViewById( R.id.user_address );
+            tvUserSProduct = itemView.findViewById( R.id.user_s_product );
+            tvUserPhoneNo = itemView.findViewById( R.id.user_phone_no );
+            tvTotalPrice = itemView.findViewById( R.id.user_total_price );
+            cvOrder = itemView.findViewById( R.id.cv_order );
         }
 
     }

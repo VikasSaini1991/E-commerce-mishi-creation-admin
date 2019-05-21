@@ -80,6 +80,7 @@
             android:layout_height="wrap_content"
             android:text="@string/phone_no"
             android:textSize="15sp"
+
             android:layout_toLeftOf="@id/user_phone_no"/>
         <TextView
             android:id="@+id/user_phone_no"
@@ -118,7 +119,7 @@
             android:id="@+id/b_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/b_delete"
+            android:text="@string/delete"
             android:textColor="@color/white_color"
             android:textSize="20sp"
             android:background="@drawable/edit_button_background"

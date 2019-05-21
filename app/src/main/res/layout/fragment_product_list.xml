@@ -14,7 +14,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/b_create_new_product"
+        android:text="@string/create_new_product"
         android:textSize="15sp"
         android:textColor="@color/white_color"
         android:background="@drawable/edit_button_background"

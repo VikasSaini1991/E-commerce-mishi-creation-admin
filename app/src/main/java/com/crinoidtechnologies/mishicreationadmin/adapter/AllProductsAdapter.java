@@ -13,20 +13,20 @@ import java.util.List;
 
 public class AllProductsAdapter extends FragmentStatePagerAdapter {
 
-    int tabCount;
-    List<String> stringList;
+    private int tabCount;
+    private List<String> stringListTitle;
     private Fragment fragment;
 
-    public AllProductsAdapter(FragmentManager fm, List<String> stringList) {
+    public AllProductsAdapter(FragmentManager fm, List<String> stringListTitle) {
         super( fm );
 
-        this.stringList=stringList;
+        this.stringListTitle = stringListTitle;
     }
 
 
     @Override
     public Fragment getItem(int i) {
-        for (int j = 0; j < stringList.size(); j++) {
+        for (int j = 0; j < stringListTitle.size(); j++) {
             if (j == i) {
                 fragment = new ProductListFragment();
                 break;
@@ -37,11 +37,11 @@ public class AllProductsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return stringList.size();
+        return stringListTitle.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return stringList.get( position );
+        return stringListTitle.get( position );
     }
 }

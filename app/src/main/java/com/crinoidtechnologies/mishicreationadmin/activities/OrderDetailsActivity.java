@@ -7,9 +7,11 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
+import com.crinoidtechnologies.mishicreationadmin.utils.Constants;
 
 public class OrderDetailsActivity extends AppCompatActivity {
-    TextView tvName,tvAddress,tvPhoneNo,tvSProduct,tvTotalPrice;
+   private TextView tvName,tvAddress,tvPhoneNo,tvSProduct,tvTotalPrice;
+    private String name,address,product,phoneNo,totalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled( true );
         }
         initViews();
+
     }
+
 
     private void initViews() {
         tvName=findViewById( R.id.order_details_user_name );
@@ -30,15 +34,16 @@ public class OrderDetailsActivity extends AppCompatActivity {
         tvSProduct=findViewById( R.id.order_details_user_s_product );
         tvTotalPrice=findViewById( R.id.order_details_user_total_price );
         Intent intent=getIntent();
-        String name=intent.getExtras().getString( "userName" );
-        String address=intent.getExtras().getString( "userAddress" );
-        String sProduct=intent.getExtras().getString( "userSProduct" );
-        String phoneNo=intent.getExtras().getString( "userPhoneNo" );
-        String totalPrice=intent.getExtras().getString( "userTotalPrice" );
+        name=intent.getExtras().getString( Constants.NAME );
+        address=intent.getExtras().getString( Constants.ADDRESS );
+        product=intent.getExtras().getString( Constants.S_PRODUCT );
+        phoneNo=intent.getExtras().getString( Constants.PHONE_NO );
+        totalPrice=intent.getExtras().getString( Constants.TOTAL_PRICE );
+
         tvName.setText( name );
         tvAddress.setText( address );
         tvPhoneNo.setText( phoneNo );
-        tvSProduct.setText( sProduct );
+        tvSProduct.setText( product );
         tvTotalPrice.setText( totalPrice );
     }
     @Override

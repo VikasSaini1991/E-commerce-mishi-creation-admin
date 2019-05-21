@@ -8,8 +8,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-
         >
         <Button
             android:id="@+id/b_category_edit_change_image"
@@ -33,10 +31,9 @@
 
             />
         <EditText
-            android:id="@+id/title_change"
+            android:id="@+id/et_title_change"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_below="@id/image_change"
@@ -46,11 +43,11 @@
 
 
         <Button
-            android:id="@+id/save_category"
+            android:id="@+id/b_save_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="@string/b_save_category"
+            android:text="@string/save_category"
             android:textColor="@color/white_color"
             android:background="@drawable/edit_button_background"/>
 

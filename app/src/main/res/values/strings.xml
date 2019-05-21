@@ -17,7 +17,7 @@
     <string name="save_changes_in_audio">Save changes in audio</string>
     <string name="no_browser">No browser</string>
     <string name="no_app">No app</string>
-    <string name="cancel">Cancel</string>
+
 
     // for internet dialog
     <string name="no_internet_available">No internet available</string>
@@ -29,9 +29,10 @@
     <string name="proceed">Proceed</string>
     <string name="try_again">Try Again</string>
     <string name="ok">Ok</string>
+    <string name="cancel">cancel</string>
     <string name="manage_workout">Manage Workout</string>
     <string name="manage">Manage</string>
-    <string name="b_edit">Edit</string>
+    <string name="edit">Edit</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -42,24 +43,27 @@
     <string name="category_edit">Category Edit</string>
     <string name="mishi_admin">Mishi Admin</string>
     <string name="order_details">Order Details</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="change">Change</string>
-    <string name="name">Name :</string>
-    <string name="address">Address :</string>
-    <string name="s_product">S Product :</string>
+
+    <!-- TODO: Remove or changed this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="name">Name : </string>
+    <string name="address">Address : </string>
+    <string name="s_product">S Product : </string>
     <string name="phone_no">Phone No : </string>
-    <string name="total_price">Total Price :</string>
-    <string name="b_delete">DELETE</string>
-    <string name="b_product_edit_save">SAVE</string>
-    <string name="b_change">Change</string>
+    <string name="total_price">Total Price : </string>
+
+    <string name="product_edit_save">SAVE</string>
+
     <string name="profile">Profile</string>
     <string name="create_new_category">Create New Category</string>
-    <string name="b_create_new_product">Create New Product</string>
-    <string name="b_save_category">Save</string>
+    <string name="create_new_product">Create New Product</string>
+    <string name="save_category">Save</string>
     <string name="product_edit">Product Edit</string>
     <string name="pickUp">Pickup</string>
+    <string name="image_saved">Image Saved</string>
+    <string name="select_action">Select Action</string>
 
 
 </resources>

@@ -23,29 +23,28 @@ import java.util.zip.Inflater;
 public class AllProducts extends Fragment {
 
     private View rootView;
-    ViewPager viewPager;
-    List<String> stringList=new ArrayList<>(  );
+    private ViewPager viewPager;
+    private List<String> stringListTitle = new ArrayList<>();
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate( R.layout.products_list_view, container, false );
-        ((AppCompatActivity)getActivity()).getSupportActionBar();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled( true );
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle( "All Products" );
+        rootView = inflater.inflate( R.layout.fragment_all_products, container, false );
+        ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled( true );
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( "All Products" );
         viewPager = rootView.findViewById( R.id.viewpager );
         TabLayout tabLayout = rootView.findViewById( R.id.tab_layout );
         tabLayout.setTabMode( TabLayout.MODE_SCROLLABLE );
-        stringList.add( "Image" );
-        stringList.add( "data" );
-        stringList.add( "camera" );
-        stringList.add( "computer" );
-        stringList.add( "books" );
-        viewPager.setAdapter( new AllProductsAdapter( getFragmentManager(), stringList ) );
+        stringListTitle.add( "Image" );
+        stringListTitle.add( "data" );
+        stringListTitle.add( "camera" );
+        stringListTitle.add( "computer" );
+        stringListTitle.add( "books" );
+        viewPager.setAdapter( new AllProductsAdapter( getFragmentManager(), stringListTitle ) );
         tabLayout.setupWithViewPager( viewPager );
-
         viewPager.addOnPageChangeListener( new TabLayout.TabLayoutOnPageChangeListener( tabLayout ) );
         return rootView;
     }

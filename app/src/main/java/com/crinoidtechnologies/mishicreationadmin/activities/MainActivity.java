@@ -21,7 +21,8 @@ import com.crinoidtechnologies.mishicreationadmin.fragments.AllProducts;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +30,7 @@ public class MainActivity extends AppCompatActivity
         setContentView( R.layout.activity_main );
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById( R.id.fab );
-//        fab.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make( view, "Replace with your own action", Snackbar.LENGTH_LONG )
-//                        .setAction( "Action", null ).show();
-//            }
-//        } );
-
-        DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
+        drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close );
         drawer.addDrawerListener( toggle );
@@ -51,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
+        drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
         if (drawer.isDrawerOpen( GravityCompat.START )) {
             drawer.closeDrawer( GravityCompat.START );
         } else {
@@ -66,56 +57,39 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected( item );
-//    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_profile) {
-            // Handle the camera action
-        } else if (id == R.id.nav_all_category) {
-            allCategoryFetch();
-
-        } else if (id == R.id.nav_all_orders) {
-            allOrderFetch();
-
-        } else if (id == R.id.nav_all_products) {
-            allProductFetch();
+        switch (item.getItemId()) {
+            case R.id.nav_profile:
+                break;
+            case R.id.nav_all_category:
+                allCategoryFetch();
+                break;
+            case R.id.nav_all_orders:
+                allOrderFetch();
+                break;
+            case R.id.nav_all_products:
+                allProductFetch();
+                break;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
         drawer.closeDrawer( GravityCompat.START );
         return true;
     }
 
     private void allProductFetch() {
-        fragmentManager=getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProducts() ).commit();
     }
 
     private void allOrderFetch() {
-        fragmentManager=getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllOrders() ).commit();
     }
 
     private void allCategoryFetch() {
-        fragmentManager=getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllCategory() ).addToBackStack( "null" ).commit();
     }
 }

@@ -29,12 +29,12 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class AllOrders extends Fragment {
-    Context context;
-    RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
-    LinearLayoutManager linearLayoutManager;
-    List<OrderData> orderDataList;
-    Activity activity;
+    private Context context;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private LinearLayoutManager linearLayoutManager;
+    private List<OrderData> orderDataList;
+    private Activity activity;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -81,29 +81,29 @@ public class AllOrders extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-    View view= inflater.inflate( R.layout.fragment_all_orders, container, false );
-        ((AppCompatActivity)getActivity()).getSupportActionBar();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled( true );
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle( "All Orders" );
-    orderDataList= new ArrayList<>(  );
-    orderDataList.add( new OrderData( "vikas","bhiwani","5","9355529720","200.50" ) );
-        orderDataList.add( new OrderData( "vikas","bhiwani","4","123456","200.50" ) );
-        orderDataList.add( new OrderData( "Rahul","bhiwani","3","9812644069","200.50" ) );
-        orderDataList.add( new OrderData( "Akshay","bhiwani","2","9138176259","200.50" ) );
-        orderDataList.add( new OrderData( "vivek","bhiwani","8","123456","200.50" ) );
-        orderDataList.add( new OrderData( "shryansh","bhiwani","1","123456","200.50" ) );
-        orderDataList.add( new OrderData( "suhbam","bhiwani","3","8059495249","200.50" ) );
-        orderDataList.add( new OrderData( "nand","bhiwani","4","123456","200.50" ) );
-        orderDataList.add( new OrderData( "vinod","bhiwani","3","123456","200.50" ) );
+        View view = inflater.inflate( R.layout.fragment_all_orders, container, false );
+        ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled( true );
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( "All Orders" );
+        orderDataList = new ArrayList<>();
+        orderDataList.add( new OrderData( "vikas", "bhiwani", "5", "9355529720", "200.50" ) );
+        orderDataList.add( new OrderData( "vikas", "bhiwani", "4", "123456", "200.50" ) );
+        orderDataList.add( new OrderData( "Rahul", "bhiwani", "3", "9812644069", "200.50" ) );
+        orderDataList.add( new OrderData( "Akshay", "bhiwani", "2", "9138176259", "200.50" ) );
+        orderDataList.add( new OrderData( "vivek", "bhiwani", "8", "123456", "200.50" ) );
+        orderDataList.add( new OrderData( "shryansh", "bhiwani", "1", "123456", "200.50" ) );
+        orderDataList.add( new OrderData( "suhbam", "bhiwani", "3", "8059495249", "200.50" ) );
+        orderDataList.add( new OrderData( "nand", "bhiwani", "4", "123456", "200.50" ) );
+        orderDataList.add( new OrderData( "vinod", "bhiwani", "3", "123456", "200.50" ) );
 
 
-        recyclerView=view.findViewById( R.id.order_recyler_view );
-        linearLayoutManager=new LinearLayoutManager( getActivity() );
-        adapter=new OrderAdapter( context,orderDataList,activity,this );
+        recyclerView = view.findViewById( R.id.order_recyler_view );
+        linearLayoutManager = new LinearLayoutManager( getActivity() );
+        adapter = new OrderAdapter( context, orderDataList, activity, this );
         recyclerView.setLayoutManager( linearLayoutManager );
         recyclerView.setAdapter( adapter );
-        return view ;
+        return view;
 
     }
 
