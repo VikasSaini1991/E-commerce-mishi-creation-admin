@@ -70,16 +70,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     }
 
     public class OrderViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvUserName, tvUserAddress, tvUserSProduct, tvUserPhoneNo, tvTotalPrice;
+        private TextView tvUserName, tvUserAddress, tvUserSProduct, tvUserPhoneNo, tvTotalPrice,tvAfterDiscountPrice;
         private CardView cvOrder;
 
         public OrderViewHolder(@NonNull View itemView) {
             super( itemView );
-            tvUserName = itemView.findViewById( R.id.user_name );
-            tvUserAddress = itemView.findViewById( R.id.user_address );
-            tvUserSProduct = itemView.findViewById( R.id.user_s_product );
-            tvUserPhoneNo = itemView.findViewById( R.id.user_phone_no );
-            tvTotalPrice = itemView.findViewById( R.id.user_total_price );
+            tvUserName = itemView.findViewById( R.id.tv_order_user_name );
+            tvUserAddress = itemView.findViewById( R.id.tv_order_user_address );
+            tvUserSProduct = itemView.findViewById( R.id.tv_order_user_s_product );
+            tvUserPhoneNo = itemView.findViewById( R.id.tv_order_user_phone_no );
+            tvTotalPrice = itemView.findViewById( R.id.tv_order_user_total_price );
+            tvAfterDiscountPrice=itemView.findViewById( R.id.tv_order_after_discount_price );
             cvOrder = itemView.findViewById( R.id.cv_order );
         }
 

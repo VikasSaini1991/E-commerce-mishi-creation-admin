@@ -165,7 +165,8 @@ public class AllCategory extends Fragment {
 
         switch (id) {
             case android.R.id.home:
-                getActivity().onBackPressed();
+                Intent intent = new Intent(fragment.getActivity(), MainActivity.class);
+                this.startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected( item );

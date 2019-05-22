@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager fragmentManager;
     private DrawerLayout drawer;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
+
     }
 
     @Override
@@ -73,14 +75,17 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_all_products:
                 allProductFetch();
                 break;
+
         }
         drawer.closeDrawer( GravityCompat.START );
         return true;
     }
 
     private void allProductFetch() {
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProducts() ).commit();
+
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProducts() ).commit();
+
     }
 
     private void allOrderFetch() {
@@ -89,7 +94,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void allCategoryFetch() {
+
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllCategory() ).addToBackStack( "null" ).commit();
+        fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllCategory() ).commit();
     }
 }

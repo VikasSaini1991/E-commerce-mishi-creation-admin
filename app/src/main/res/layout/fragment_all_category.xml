@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/edit_button_background"
+        android:background="@color/dark_blue_color"
         android:text="@string/create_new_category"
         android:textColor="@color/white_color"
 

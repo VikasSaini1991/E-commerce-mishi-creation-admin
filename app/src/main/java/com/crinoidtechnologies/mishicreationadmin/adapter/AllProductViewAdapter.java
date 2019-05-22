@@ -67,7 +67,7 @@ public class AllProductViewAdapter extends RecyclerView.Adapter<AllProductViewAd
     public class AllProductViewHoler extends RecyclerView.ViewHolder {
         private Button bProductEdit, bProductDelete;
         private ImageView ivProductImage;
-        private TextView tvProductTotalPrice;
+        private TextView tvProductTotalPrice ,tvAfterDiscountPrice;
 
         public AllProductViewHoler(@NonNull View itemView) {
             super( itemView );
@@ -75,6 +75,7 @@ public class AllProductViewAdapter extends RecyclerView.Adapter<AllProductViewAd
             bProductDelete = itemView.findViewById( R.id.b_product_delete );
             ivProductImage = itemView.findViewById( R.id.iv_product_image_card_view );
             tvProductTotalPrice = itemView.findViewById( R.id.tv_product_total_price );
+            tvAfterDiscountPrice=itemView.findViewById( R.id.tv_product_after_discount );
         }
     }
 }

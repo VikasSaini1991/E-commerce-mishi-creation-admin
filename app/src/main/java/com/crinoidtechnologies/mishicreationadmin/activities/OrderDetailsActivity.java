@@ -28,11 +28,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
 
     private void initViews() {
-        tvName=findViewById( R.id.order_details_user_name );
-        tvAddress=findViewById( R.id.order_details_user_address );
-        tvPhoneNo=findViewById( R.id.order_details_user_phone_no );
-        tvSProduct=findViewById( R.id.order_details_user_s_product );
-        tvTotalPrice=findViewById( R.id.order_details_user_total_price );
+        tvName=findViewById( R.id.tv_order_details_user_name );
+        tvAddress=findViewById( R.id.tv_order_details_user_address );
+        tvPhoneNo=findViewById( R.id.tv_order_details_user_phone_no );
+        tvSProduct=findViewById( R.id.tv_order_details_user_s_product );
+        tvTotalPrice=findViewById( R.id.tv_order_details_user_total_price );
         Intent intent=getIntent();
         name=intent.getExtras().getString( Constants.NAME );
         address=intent.getExtras().getString( Constants.ADDRESS );
