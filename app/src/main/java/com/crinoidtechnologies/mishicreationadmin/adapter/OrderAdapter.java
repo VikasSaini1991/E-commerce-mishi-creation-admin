@@ -14,11 +14,10 @@ import android.widget.TextView;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.activities.OrderDetailsActivity;
-import com.crinoidtechnologies.mishicreationadmin.models.OrderData;
+import com.crinoidtechnologies.mishicreationadmin.modelsVikas.OrderData;
 import com.crinoidtechnologies.mishicreationadmin.utils.Constants;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
     public Context context;

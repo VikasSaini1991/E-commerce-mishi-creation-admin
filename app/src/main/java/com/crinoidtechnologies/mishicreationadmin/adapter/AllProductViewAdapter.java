@@ -15,12 +15,11 @@ import android.widget.TextView;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.activities.ProductEditActivity;
-import com.crinoidtechnologies.mishicreationadmin.models.ProductData;
+import com.crinoidtechnologies.mishicreationadmin.modelsVikas.ProductData;
 import com.crinoidtechnologies.mishicreationadmin.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class AllProductViewAdapter extends RecyclerView.Adapter<AllProductViewAdapter.AllProductViewHoler> {
     public Context context;

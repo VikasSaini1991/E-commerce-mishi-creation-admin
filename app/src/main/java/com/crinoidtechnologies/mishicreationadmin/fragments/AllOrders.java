@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.adapter.OrderAdapter;
-import com.crinoidtechnologies.mishicreationadmin.models.OrderData;
+import com.crinoidtechnologies.mishicreationadmin.modelsVikas.OrderData;
 
 import java.util.ArrayList;
 import java.util.List;

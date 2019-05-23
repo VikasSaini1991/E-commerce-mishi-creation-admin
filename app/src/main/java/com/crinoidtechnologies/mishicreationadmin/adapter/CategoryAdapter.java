@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.activities.CategoryEditActivity;
 import com.crinoidtechnologies.mishicreationadmin.fragments.AllProducts;
-import com.crinoidtechnologies.mishicreationadmin.models.CategoryData;
+import com.crinoidtechnologies.mishicreationadmin.modelsVikas.CategoryData;
 import com.crinoidtechnologies.mishicreationadmin.utils.Constants;
 import com.squareup.picasso.Picasso;
 

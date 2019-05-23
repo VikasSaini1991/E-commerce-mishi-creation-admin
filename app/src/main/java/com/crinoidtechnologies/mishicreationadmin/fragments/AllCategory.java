@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.activities.MainActivity;
 import com.crinoidtechnologies.mishicreationadmin.adapter.CategoryAdapter;
-import com.crinoidtechnologies.mishicreationadmin.models.CategoryData;
+import com.crinoidtechnologies.mishicreationadmin.modelsVikas.CategoryData;
 
 import java.util.ArrayList;
 import java.util.List;

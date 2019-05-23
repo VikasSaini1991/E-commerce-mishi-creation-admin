@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.adapter.AllProductViewAdapter;
-import com.crinoidtechnologies.mishicreationadmin.models.ProductData;
+import com.crinoidtechnologies.mishicreationadmin.modelsVikas.ProductData;
 
 import java.util.ArrayList;
 import java.util.List;
