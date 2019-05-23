@@ -193,7 +193,6 @@ public class ServiceGenerator {
                     // otherwise just pass the original response on
                     return response;
 
-
                     //
                 }
             });

@@ -60,7 +60,7 @@ public interface MyRetrofitChatApiInterface {
     @GET(ServerUrls.ALL_ORDERS_URL)
     Call<ArrayList<AllOrdersDatum>> fetchAllOrders();
 
-    // delete a order
+    // delete a order...
     @DELETE(ServerUrls.DELETE_ORDER_URL)
     Call<AllOrdersDatum> deleteOrder(@Path(ID) long id, @Query(FORCE) boolean force);
 
