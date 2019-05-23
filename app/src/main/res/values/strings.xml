@@ -52,7 +52,7 @@
     <string name="address">Address : </string>
     <string name="s_product">S Product : </string>
     <string name="phone_no">Phone No : </string>
-    <string name="total_price">Total Price : </string>
+    <string name="total_price"><strike>Total Price : </strike></string>
 
     <string name="product_edit_save">SAVE</string>
 
@@ -65,6 +65,11 @@
     <string name="image_saved">Image Saved</string>
     <string name="select_action">Select Action</string>
     <string name="after_discount">After Discount(Price) -</string>
+    <string name="price">Price : </string>
+    <string-array name="product_items">
+        <item>All</item>
+        <item>Ambee</item>
+    </string-array>
 
 
 </resources>

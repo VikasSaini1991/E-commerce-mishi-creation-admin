@@ -23,7 +23,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/edit"
-          android:textColor="@color/white_color"
+          android:textColor="@color/color_white"
           android:textSize="13sp"
           android:background="@drawable/edit_button_background"
           android:layout_alignParentRight="true"
@@ -48,7 +48,7 @@
             android:layout_centerVertical="true"
             android:layout_below="@id/iv_category_image"
             android:gravity="center"
-            android:textColor="@color/black_color"
+            android:textColor="@color/color_black"
 
 
             />

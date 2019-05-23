@@ -8,18 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
+        android:layout_marginTop="50dp"
         android:id="@+id/product_recyler_view">
 
     </android.support.v7.widget.RecyclerView>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/create_new_product"
-        android:textSize="15sp"
-        android:textColor="@color/white_color"
 
-        android:background="@color/dark_blue_color"
-        android:layout_alignParentBottom="true"/>
 
 
 </RelativeLayout>

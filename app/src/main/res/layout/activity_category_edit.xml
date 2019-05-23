@@ -13,10 +13,8 @@
             android:id="@+id/b_category_edit_change_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
             android:text="@string/change"
-            android:textColor="@color/white_color"
+            android:textColor="@color/color_white"
             android:background="@drawable/edit_button_background"
             android:layout_centerInParent="true"/>
 
@@ -49,8 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:text="@string/save_category"
-            android:textColor="@color/white_color"
-            android:background="@color/dark_blue_color"/>
+            android:textColor="@color/color_white"
+            android:background="@color/color_dark_blue"/>
 
 
 </RelativeLayout>

@@ -7,9 +7,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,37 +29,46 @@ import java.io.IOException;
 import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 public class ProductEditActivity extends AppCompatActivity implements View.OnClickListener {
-private ImageView ivProductEditImage;
-private AlertDialog.Builder pictureDialog;
-private TextView tvProductEditTotalPrice;
-private Button bChangeProductImage;
-private String totalPrice;
-private int productImage;
-private Uri filePath;
+    private ImageView ivProductEditImage;
+    private AlertDialog.Builder pictureDialog;
+    private TextView tvProductEditTotalPrice;
+    private Button bChangeProductImage;
+    private String totalPrice;
+    private int productImage;
+    private Uri filePath;
+    private Toolbar topToolBar;
+    private ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_product_edit );
-        if(getSupportActionBar()!=null)
-        {
-            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-            getSupportActionBar().setDisplayShowHomeEnabled( true );
-        }
         initViews();
+        initData();
+    }
+
+    private void initData() {
+        Intent intent = getIntent();
+        totalPrice = intent.getExtras().getString( Constants.TOTAL_PRICE );
+        productImage = intent.getExtras().getInt( Constants.IMAGE );
+        ivProductEditImage.setImageResource( productImage );
+        tvProductEditTotalPrice.setText( totalPrice );
     }
 
     private void initViews() {
-        bChangeProductImage=findViewById( R.id.b_change_product_image );
-        ivProductEditImage=findViewById( R.id.iv_product_image );
-        tvProductEditTotalPrice=findViewById( R.id.et_product_price );
-        Intent intent=getIntent();
-        totalPrice=intent.getExtras().getString( Constants.TOTAL_PRICE );
-        productImage=intent.getExtras().getInt( Constants.IMAGE );
-        ivProductEditImage.setImageResource( productImage );
-        tvProductEditTotalPrice.setText(totalPrice );
+        topToolBar = findViewById( R.id.toolbar );
+        setSupportActionBar( topToolBar );
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled( true );
+        bChangeProductImage = findViewById( R.id.b_change_product_image );
+        ivProductEditImage = findViewById( R.id.iv_product_image );
+        tvProductEditTotalPrice = findViewById( R.id.et_product_price );
+
         bChangeProductImage.setOnClickListener( this );
 
     }
+
+
     private void openGallaryAndCamera() {
         pictureDialog = new AlertDialog.Builder( this );
         pictureDialog.setTitle( R.string.select_action );
@@ -164,8 +175,7 @@ private Uri filePath;
 
     @Override
     public void onClick(View v) {
-        if(v.equals( bChangeProductImage ))
-        {
+        if (v.equals( bChangeProductImage )) {
             openGallaryAndCamera();
         }
 

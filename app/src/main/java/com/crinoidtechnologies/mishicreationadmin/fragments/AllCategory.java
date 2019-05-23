@@ -89,8 +89,6 @@ public class AllCategory extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate( R.layout.fragment_all_category, container, false );
         ((AppCompatActivity) getActivity()).getSupportActionBar();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled( true );
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( "All Category" );
         setHasOptionsMenu( true );
 
