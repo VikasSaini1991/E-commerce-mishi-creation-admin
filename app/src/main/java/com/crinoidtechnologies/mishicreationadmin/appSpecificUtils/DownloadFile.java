@@ -3,7 +3,7 @@ package com.crinoidtechnologies.mishicreationadmin.appSpecificUtils;
 import android.os.AsyncTask;
 
 import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.listeners.FileDownloadListener;
-import com.crinoidtechnologies.mishicreationadmin.models.DownloadData;
+import com.crinoidtechnologies.mishicreationadmin.modelsVikas.DownloadData;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
