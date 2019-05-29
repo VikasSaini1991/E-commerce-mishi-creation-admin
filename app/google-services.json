@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "230143552885",
+    "firebase_url": "https://mishi-4443a.firebaseio.com",
+    "project_id": "mishi-4443a",
+    "storage_bucket": "mishi-4443a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230143552885:android:35f830a3f7bb4c91",
+        "android_client_info": {
+          "package_name": "com.crinoidtechnologies.mishicreationadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230143552885-4lokf8r0seglh0tak2t1kqodqus0b91l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crinoidtechnologies.mishicreationadmin",
+            "certificate_hash": "a616d48e8b39ccd11d6ef321c28facda23177da3"
+          }
+        },
+        {
+          "client_id": "230143552885-aq2b61mf2emglk2c9tv3ib1aopsbmdka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT8XIrAGiyIiSQ6imBgZR-et5IOPLZ7ho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230143552885-aq2b61mf2emglk2c9tv3ib1aopsbmdka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

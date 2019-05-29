@@ -29,8 +29,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.ProductEditActivity"
-            android:label="@string/product_edit"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".activities.OrderDetailsActivity"
             android:label="@string/order_details" />
@@ -46,8 +45,8 @@
         </activity>
         <activity
             android:name=".activities.CategoryEditActivity"
-            android:label="@string/category_edit"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
 </manifest>

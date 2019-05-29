@@ -16,6 +16,9 @@ public class InsertProductData {
     @SerializedName("regular_price")
     @Expose
     private String regularPrice;
+    @SerializedName("price")
+    @Expose
+    private String price;
     @SerializedName("description")
     @Expose
     private String description;
@@ -29,10 +32,11 @@ public class InsertProductData {
     @Expose
     private List<Image> images = null;
 
-    public InsertProductData(String name, String type, String regularPrice, String description, String shortDescription, List<Category> categories, List<Image> images) {
+    public InsertProductData(String name, String type, String regularPrice, String price,String description, String shortDescription, List<Category> categories, List<Image> images) {
         this.name = name;
         this.type = type;
         this.regularPrice = regularPrice;
+        this.price=price;
         this.description = description;
         this.shortDescription = shortDescription;
         this.categories = categories;
@@ -61,6 +65,13 @@ public class InsertProductData {
 
     public void setRegularPrice(String regularPrice) {
         this.regularPrice = regularPrice;
+    }
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getDescription() {
@@ -94,5 +105,6 @@ public class InsertProductData {
     public void setImages(List<Image> images) {
         this.images = images;
     }
+
 
 }

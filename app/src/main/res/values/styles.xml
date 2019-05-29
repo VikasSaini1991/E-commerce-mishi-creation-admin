@@ -9,9 +9,11 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
+        <item name="colorControlNormal">@color/color_white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

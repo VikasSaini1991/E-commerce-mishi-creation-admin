@@ -1,43 +1,82 @@
 package com.crinoidtechnologies.mishicreationadmin.activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
+import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.CurrentSession;
+import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.serverUtils.ServerRequest;
+import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.serverUtils.ServerRequestCallback;
+import com.crinoidtechnologies.mishicreationadmin.controllers.ServerController;
+import com.crinoidtechnologies.mishicreationadmin.models.AllCategoryDatum;
+import com.crinoidtechnologies.mishicreationadmin.models.AllProductsDatum;
+import com.crinoidtechnologies.mishicreationadmin.models.Category;
+import com.crinoidtechnologies.mishicreationadmin.models.Image;
+import com.crinoidtechnologies.mishicreationadmin.models.InsertProductData;
 import com.crinoidtechnologies.mishicreationadmin.utils.Constants;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 public class ProductEditActivity extends AppCompatActivity implements View.OnClickListener {
+    String TAG = "ProductEditActivity";
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
     private ImageView ivProductEditImage;
     private AlertDialog.Builder pictureDialog;
     private TextView tvProductEditTotalPrice;
     private Button bChangeProductImage;
     private String totalPrice;
+    private String createNewProduct = " ";
+    private String dowanloadImageUri;
     private int productImage;
     private Uri filePath;
     private Toolbar topToolBar;
     private ActionBar actionBar;
+    private ProgressDialog pd;
+    private EditText  etProductTitle, etProductPrice, etProductSalePrice;
+    private Spinner categoryListSpinner;
+    private ArrayAdapter<String> arrayCategoryListadapter;
+    private ArrayList<AllCategoryDatum> allCategoryDatumArrayList=new ArrayList<>(  );
+    private ArrayList<String> arrayListCategory=new ArrayList<>(  );
+
+
+
+    ArrayList<Category> categoryList;
+    ArrayList<Image> imageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +84,18 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         setContentView( R.layout.activity_product_edit );
         initViews();
         initData();
+        setCategoryListSpinner();
+    }
+
+
+
+    private void setCategoryListSpinner() {
+
+//        arrayCategoryListadapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item, CurrentSession.getCI().getLocalData().getCategoryList().get( 0 ).getName() )
+//        arrayCategoryListadapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+////        refreshAdapterSpiner();
+//        categoryListSpinner.setAdapter( arrayCategoryListadapter );
+//        arrayCategoryListadapter.notifyDataSetChanged();
     }
 
     private void initData() {
@@ -56,15 +107,47 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initViews() {
+
+        pd = new ProgressDialog( this );
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        categoryList = new ArrayList<>();
+        imageList = new ArrayList<>();
+        categoryListSpinner=findViewById( R.id.spinner_products );
         topToolBar = findViewById( R.id.toolbar );
-        setSupportActionBar( topToolBar );
-        actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled( true );
+        etProductTitle = findViewById( R.id.et_product_name );
+        etProductPrice = findViewById( R.id.et_product_price );
+        etProductSalePrice = findViewById( R.id.et_product_sale_price );
+
+
         bChangeProductImage = findViewById( R.id.b_change_product_image );
         ivProductEditImage = findViewById( R.id.iv_product_image );
         tvProductEditTotalPrice = findViewById( R.id.et_product_price );
 
+        Bundle bundle = getIntent().getExtras();
+        createNewProduct = bundle.getString( Constants.CREATE_NEW_PRODUCT );
+        Log.d( TAG, "initViews: create new product" + createNewProduct );
+        if (createNewProduct != null) {
+
+            if (createNewProduct.equals( Constants.CREATE_NEW_PRODUCT )) {
+                Log.d( TAG, "initViews: if" );
+                topToolBar.setTitle( R.string.create_new_product );
+                bChangeProductImage.setText( R.string.upload );
+
+            }
+        } else {
+            Log.d( TAG, "initViews: else" );
+            topToolBar.setTitle( R.string.product_edit );
+            bChangeProductImage.setText( R.string.change );
+
+        }
+
+
+        setSupportActionBar( topToolBar );
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled( true );
         bChangeProductImage.setOnClickListener( this );
+
 
     }
 
@@ -180,38 +263,97 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         }
 
     }
-    //    private void uploadImage() {
-//        if (filePath != null) {
-//            Log.d( TAG, "uploadImage: "+filePath );
-//            final ProgressDialog progressDialog = new ProgressDialog( this );
-//            progressDialog.setTitle( "Uploading..." );
-//            progressDialog.show();
-//
-//            StorageReference ref = storageReference.child( "images/" + UUID.randomUUID().toString() );
-//            ref.putFile( filePath )
-//                    .addOnSuccessListener( new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            progressDialog.dismiss();
-//                            Toast.makeText( Main24Activity.this, "Uploaded", Toast.LENGTH_SHORT ).show();
-//                        }
-//                    } )
-//                    .addOnFailureListener( new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            progressDialog.dismiss();
-//                            Toast.makeText( Main24Activity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT ).show();
-//                        }
-//                    } )
-//                    .addOnProgressListener( new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
-//                                    .getTotalByteCount());
-//                            progressDialog.setMessage( "Uploaded " + (int) progress + "%" );
-//                        }
-//                    } );
-//        }
-//    }
 
+
+    private void createProduct() {
+
+//        pd.setMessage(getString(R.string.creating_product));
+//        pd.show();
+
+        // add data to the list , sample data
+        categoryList.add( new Category( 10 ) );
+        imageList.add( new Image( dowanloadImageUri ) );
+
+        ServerController.getInstance().createProductCall( new InsertProductData( etProductTitle.getText().toString(),
+                "simple", etProductSalePrice.getText().toString(), "10", "A newly fashion arise on ", "New Trend"
+                , categoryList, imageList ), new ServerRequestCallback<AllProductsDatum>() {
+            @Override
+            public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {
+
+//                pd.dismiss();
+                Log.d( TAG, "onSuccess: ( CREATE PRODUCT API )-( PRODCUT NAME ): " + dataJson.getName() );
+                Log.d( TAG, "onSuccess: ( CREATE PRODUT API )-( PRODCUT IMAGE ): " + dataJson.getImages().get( 0 ).getSrc() );
+            }
+
+            @Override
+            public void onFailure(ServerRequest request, Error error) {
+
+                Log.d( TAG, "onFailure: ( CREATE PRODCUT API )-( FAILURE ) " );
+//                pd.dismiss();
+
+            }
+        } );
+
+    }
+    private void uploadImage() {
+        Log.d( TAG, "uploadImage: " );
+        if (filePath != null) {
+            Log.d( TAG, "uploadImage: " + filePath );
+//            progressDialog.setTitle( R.string.uploading );
+//            progressDialog.show();
+
+            StorageReference ref = storageReference.child( "images/" + UUID.randomUUID().toString() );
+            ref.putFile( filePath )
+                    .addOnSuccessListener( new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            progressDialog.dismiss();
+                            Log.d( TAG, "onSuccess: 1 " + taskSnapshot.getMetadata().getPath() );
+//                            Log.d( TAG, "onSuccess: "+taskSnapshot.getMetadata().getName() );
+
+                            storageReference.child( taskSnapshot.getMetadata().getPath() ).getDownloadUrl().addOnSuccessListener( new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    // Got the download URL for 'users/me/profile.png'
+//                                    Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+                                    dowanloadImageUri = uri.toString();
+                                    if (createNewProduct != null) {
+                                        if (createNewProduct.equals( Constants.CREATE_NEW_PRODUCT )) {
+                                            createProduct();
+                                        }
+
+                                    } else {
+//                                        updateProduct();
+                                    }
+
+
+                                    Log.d( TAG, "onSuccess: 3" + uri.toString() );
+//                                    generatedFilePath = downloadUri.toString(); /// The string(file link) that you need
+                                }
+                            } ).addOnFailureListener( new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            } );
+                        }
+                    } )
+                    .addOnFailureListener( new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+//                            progressDialog.dismiss();
+                            Toast.makeText( ProductEditActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT ).show();
+                        }
+                    } )
+                    .addOnProgressListener( new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                    .getTotalByteCount());
+//                            progressDialog.setMessage( "Uploaded " + (int) progress + "%" );
+                        }
+                    } );
+        }
+    }
 }
+

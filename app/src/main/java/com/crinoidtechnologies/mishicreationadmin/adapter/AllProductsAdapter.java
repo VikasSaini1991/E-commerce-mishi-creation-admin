@@ -5,29 +5,34 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.View;
 
 import com.crinoidtechnologies.mishicreationadmin.fragments.ProductListFragment;
+import com.crinoidtechnologies.mishicreationadmin.models.AllCategoryDatum;
+import com.crinoidtechnologies.mishicreationadmin.models.AllProductsDatum;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllProductsAdapter extends FragmentStatePagerAdapter {
-
+    String TAG="AllProductsAdapter";
     private int tabCount;
-    private List<String> stringListTitle;
+    public ArrayList<AllCategoryDatum> categoryListTitle;
     private Fragment fragment;
 
-    public AllProductsAdapter(FragmentManager fm, List<String> stringListTitle) {
+    public AllProductsAdapter(FragmentManager fm, ArrayList<AllCategoryDatum> categoryListTitle) {
         super( fm );
-
-        this.stringListTitle = stringListTitle;
+        this.categoryListTitle = categoryListTitle;
     }
 
 
     @Override
     public Fragment getItem(int i) {
-        for (int j = 0; j < stringListTitle.size(); j++) {
+//        Log.d( TAG, "getItem: "+productListTitle.size() );
+        for (int j = 0; j < categoryListTitle.size(); j++) {
             if (j == i) {
+                Log.d( TAG, "getItem: "+categoryListTitle.get( j ).getName() );
                 fragment = new ProductListFragment();
                 break;
             }
@@ -37,11 +42,17 @@ public class AllProductsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return stringListTitle.size();
+        return categoryListTitle.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return stringListTitle.get( position );
+        return categoryListTitle.get( position ).getName();
     }
+
+    // REFRESH ADAPTER VIEW PAGER
+//    @Override
+//    public int getItemPosition(@NonNull Object object) {
+//        return POSITION_NONE;
+//    }
 }

@@ -13,5 +13,11 @@ public class Constants {
     public static String S_PRODUCT="product";
     public static String PHONE_NO="phoneNo";
     public  static String TOTAL_PRICE="totalPrice";
+    public  static int CATEGORY_ID=0;
+    public  static String CREATE_NEW_CATEGORY="CREATE NEW CATEGORY";
+    public  static String CREATE_NEW_PRODUCT="Create New Product";
+
+    public static String CATEGORY_EDIT="CATEGORY EDIT";
+    public  static  String UPLOAD_BUTTON="UPLOAD";
 
 }

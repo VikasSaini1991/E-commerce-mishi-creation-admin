@@ -20,24 +20,18 @@ import com.crinoidtechnologies.mishicreationadmin.models.InsertProductData;
 
 import java.util.ArrayList;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.crinoidtechnologies.mishicreationadmin.R;
-import com.crinoidtechnologies.mishicreationadmin.fragments.AllCategory;
-import com.crinoidtechnologies.mishicreationadmin.fragments.AllOrders;
-import com.crinoidtechnologies.mishicreationadmin.fragments.AllProducts;
+import com.crinoidtechnologies.mishicreationadmin.fragments.AllCategoryFragment;
+import com.crinoidtechnologies.mishicreationadmin.fragments.AllOrdersFragment;
+import com.crinoidtechnologies.mishicreationadmin.fragments.AllProductsFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -194,7 +188,7 @@ public class MainActivity extends AppCompatActivity
         pd.show();
 
         ServerController.getInstance().updateProductCall(879, new InsertProductData("Navy Blue Trouser", null,
-                "890", null, null, null, imageList), new ServerRequestCallback<AllProductsDatum>() {
+                "890", null, null,null, null, imageList), new ServerRequestCallback<AllProductsDatum>() {
             @Override
             public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {
 
@@ -227,7 +221,7 @@ public class MainActivity extends AppCompatActivity
 
                         pd.dismiss();
                         Log.d(TAG, "onSuccess: ( UPDATE CATEGORY API )-( UPDATE CATEGORY DESCRIPTION ): " + dataJson.getDescription() );
-                        Log.d(TAG, "onSuccess: ( UPDATE CATEGORY API )-( UPDATE CATEGORY IMAGE ): " + dataJson.getImage().getSrc());
+//                        Log.d(TAG, "onSuccess: ( UPDATE CATEGORY API )-( UPDATE CATEGORY IMAGE ): " + dataJson.getImage().getSrc());
 
                     }
 
@@ -253,7 +247,7 @@ public class MainActivity extends AppCompatActivity
         imageList.add(new Image("https://cdnb.lystit.com/photos/asos/0e482eaa/esprit-blue-Slim-Fit-Suit-Trouser-In-Royal-Blue.jpeg"));
 
         ServerController.getInstance().createProductCall(new InsertProductData("Blue Trouser",
-                "simple", "220", "A newly fashion arise on ", "New Trend"
+                "simple", "220", null,"A newly fashion arise on ", "New Trend"
                 , categoryList, imageList), new ServerRequestCallback<AllProductsDatum>() {
             @Override
             public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {
@@ -287,7 +281,7 @@ public class MainActivity extends AppCompatActivity
 
                 pd.dismiss();
                 Log.d(TAG, "onSuccess: ( CREATE CATEGOTY API )-( CATEGORY NAME ): " + dataJson.getName());
-                Log.d(TAG, "onSuccess: ( CREATE CATEGOTY API )-( CATEGORY IMAGE ): " + dataJson.getImage().getSrc());
+//                Log.d(TAG, "onSuccess: ( CREATE CATEGOTY API )-( CATEGORY IMAGE ): " + dataJson.getImage().getSrc());
 
             }
 
@@ -355,20 +349,21 @@ public class MainActivity extends AppCompatActivity
     private void allProductFetch() {
 
             fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProducts() ).commit();
+            fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProductsFragment() ).commit();
 
     }
 
     private void allOrderFetch() {
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllOrders() ).commit();
+        fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllOrdersFragment() ).commit();
     }
 
     private void allCategoryFetch() {
 
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllCategory() ).commit();
+        fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllCategoryFragment() ).commit();
     }
+
 
     private void allCategoriesData() {
 
@@ -417,6 +412,8 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+
+
 
 
 }

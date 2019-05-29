@@ -1,6 +1,7 @@
 package com.crinoidtechnologies.mishicreationadmin.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,15 +10,23 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
+import com.crinoidtechnologies.mishicreationadmin.activities.CategoryEditActivity;
 import com.crinoidtechnologies.mishicreationadmin.activities.MainActivity;
 import com.crinoidtechnologies.mishicreationadmin.adapter.CategoryAdapter;
-import com.crinoidtechnologies.mishicreationadmin.modelsVikas.CategoryData;
+import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.serverUtils.ServerRequest;
+import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.serverUtils.ServerRequestCallback;
+import com.crinoidtechnologies.mishicreationadmin.controllers.ServerController;
+import com.crinoidtechnologies.mishicreationadmin.models.AllCategoryDatum;
+import com.crinoidtechnologies.mishicreationadmin.models.CategoryData;
+import com.crinoidtechnologies.mishicreationadmin.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +34,20 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AllCategory.OnFragmentInteractionListener} interface
+ * {@link AllCategoryFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AllCategory#newInstance} factory method to
+ * Use the {@link AllCategoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllCategory extends Fragment {
+public class AllCategoryFragment extends Fragment implements View.OnClickListener {
+    String TAG = "AllCategoryFragment";
     Context context;
-
-
+    private Button bCreateNewCategory;
+    public ProgressDialog pd;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private GridLayoutManager gridLayoutManager;
-    private List<CategoryData> categoryDataList;
+    public ArrayList<AllCategoryDatum> categoryDataList = new ArrayList<>();
     private Activity activity;
     Fragment fragment;
 
@@ -52,7 +62,7 @@ public class AllCategory extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AllCategory() {
+    public AllCategoryFragment() {
         // Required empty public constructor
     }
 
@@ -62,11 +72,11 @@ public class AllCategory extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AllCategory.
+     * @return A new instance of fragment AllCategoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AllCategory newInstance(String param1, String param2) {
-        AllCategory fragment = new AllCategory();
+    public static AllCategoryFragment newInstance(String param1, String param2) {
+        AllCategoryFragment fragment = new AllCategoryFragment();
         Bundle args = new Bundle();
         args.putString( ARG_PARAM1, param1 );
         args.putString( ARG_PARAM2, param2 );
@@ -91,31 +101,52 @@ public class AllCategory extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( "All Category" );
         setHasOptionsMenu( true );
-
-        categoryDataList = new ArrayList<>();
-        categoryDataList.add( new CategoryData( "Crinoid", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Hisar", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Bhiwani", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Rohtak", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Gurgaon", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Mahendergarh", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Rewari", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Sonipat", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Kurkshtera", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Chandigarh", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Ambala", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Karnal", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Panipat", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Faridabad", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Sirsa", R.drawable.logo ) );
-        categoryDataList.add( new CategoryData( "Jind", R.drawable.logo ) );
-
+        initViews();
+        allCategoriesData();
+        categoryDataList.clear();
+        bCreateNewCategory=view.findViewById( R.id.create_new_category );
+        bCreateNewCategory.setOnClickListener( this );
         recyclerView = view.findViewById( R.id.category_recyler_view );
         gridLayoutManager = new GridLayoutManager( getActivity(), 2 );
-        adapter = new CategoryAdapter( context, categoryDataList, activity, this );
+        adapter = new CategoryAdapter( categoryDataList, activity, this );
         recyclerView.setLayoutManager( gridLayoutManager );
         recyclerView.setAdapter( adapter );
         return view;
+    }
+
+    private void initViews() {
+        pd = new ProgressDialog( getActivity() );
+    }
+
+    private void allCategoriesData() {
+
+        pd.setMessage(getString(R.string.fetching_categories));
+        pd.show();
+
+
+        ServerController.getInstance().allCategoriesDataCall( new ServerRequestCallback<AllCategoryDatum>() {
+            @Override
+            public void onSuccess(ServerRequest request, ArrayList<AllCategoryDatum> data, AllCategoryDatum dataJson) {
+
+                pd.dismiss();
+                categoryDataList.addAll( data );
+                Log.d( TAG, "onSuccess: body" + data.size() );
+                Log.d( TAG, "onSuccess: " );
+                adapter.notifyDataSetChanged();
+                Log.d( TAG, "onSuccess: (ALL CATEGORY API )-(CATEGORY NAME): " + data.get( 0 ).getName() );
+                Log.d( TAG, "onSuccess: " + data.get( 0 ).getImage().getSrc() );
+
+            }
+
+            @Override
+            public void onFailure(ServerRequest request, Error error) {
+
+                Log.d( TAG, "onFailure: (ALL CATEGORY API )-(FAILURE) " );
+                pd.dismiss();
+
+            }
+        } );
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -142,6 +173,13 @@ public class AllCategory extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent=new Intent( getActivity(), CategoryEditActivity.class );
+        intent.putExtra( Constants.CREATE_NEW_CATEGORY,"CREATE NEW CATEGORY");
+        startActivity( intent );
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -163,8 +201,8 @@ public class AllCategory extends Fragment {
 
         switch (id) {
             case android.R.id.home:
-                Intent intent = new Intent(fragment.getActivity(), MainActivity.class);
-                this.startActivity(intent);
+                Intent intent = new Intent( fragment.getActivity(), MainActivity.class );
+                this.startActivity( intent );
                 return true;
             default:
                 return super.onOptionsItemSelected( item );

@@ -29,6 +29,9 @@
     <string name="proceed">Proceed</string>
     <string name="try_again">Try Again</string>
     <string name="ok">Ok</string>
+    <string name="uploading">Uploading....</string>
+    <string name="delete_sucessfully">Delete Sucessfully</string>
+
     <string name="cancel">cancel</string>
     <string name="manage_workout">Manage Workout</string>
     <string name="manage">Manage</string>
@@ -40,7 +43,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="category_edit">Category Edit</string>
+
     <string name="mishi_admin">Mishi Admin</string>
     <string name="order_details">Order Details</string>
     <string name="change">Change</string>
@@ -59,8 +62,15 @@
     <string name="profile">Profile</string>
     <string name="create_new_category">Create New Category</string>
     <string name="create_new_product">Create New Product</string>
+    <string name="category_edit">Category Edit</string>
+    <string name="upload">Upload</string>
+    <string name="sucessfully_upload">Sucessfully Upload</string>
+    <string name="sucessfully_change">Sucessfully Change</string>
+    <string name="save_sucessfully">Save Sucessfully...</string>
+    <string name="update_sucessfully">Update Sucessfully...</string>
     <string name="save_category">Save</string>
     <string name="product_edit">Product Edit</string>
+
     <string name="pickUp">Pickup</string>
     <string name="image_saved">Image Saved</string>
     <string name="select_action">Select Action</string>
@@ -81,6 +91,9 @@
     <string name="deleting_product">Deleting product...</string>
     <string name="fetching_orders">Fetching orders...</string>
     <string name="deleting_order">Deleting order...</string>
+    <string name="title">Title :</string>
+    <string name="actual_price">Sale-Price :</string>
+    <string name="product_id">Product Id :</string>
 
 
 </resources>

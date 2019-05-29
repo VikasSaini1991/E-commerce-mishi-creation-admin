@@ -15,19 +15,22 @@ import android.widget.TextView;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.activities.ProductEditActivity;
-import com.crinoidtechnologies.mishicreationadmin.modelsVikas.ProductData;
+import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.CurrentSession;
+import com.crinoidtechnologies.mishicreationadmin.models.AllProductsDatum;
+import com.crinoidtechnologies.mishicreationadmin.models.ProductData;
 import com.crinoidtechnologies.mishicreationadmin.utils.Constants;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllProductViewAdapter extends RecyclerView.Adapter<AllProductViewAdapter.AllProductViewHoler> {
     public Context context;
-    private List<ProductData> productDataList;
+    private ArrayList<AllProductsDatum> productDataList;
     public Activity activity;
     public Fragment fragment;
 
-    public AllProductViewAdapter(Context context, List<ProductData> productDataList, Activity activity, Fragment fragment) {
+    public AllProductViewAdapter(Context context, ArrayList<AllProductsDatum> productDataList, Activity activity, Fragment fragment) {
         this.context = context;
         this.productDataList = productDataList;
         this.activity = activity;
@@ -44,15 +47,18 @@ public class AllProductViewAdapter extends RecyclerView.Adapter<AllProductViewAd
 
     @Override
     public void onBindViewHolder(@NonNull AllProductViewHoler allProductViewHoler, final int i) {
-        Picasso.with( fragment.getContext() ).load( productDataList.get( i ).getImageResult() ).into( allProductViewHoler.ivProductImage );
-        allProductViewHoler.tvProductTotalPrice.setText( productDataList.get( i ).getTotalPrice() );
+
+            Picasso.with( fragment.getContext() ).load( productDataList.get( i ).getImages().get( 0 ).getSrc() ).into( allProductViewHoler.ivProductImage );
+            allProductViewHoler.tvProductTotalPrice.setText( productDataList.get( i ).getPrice() );
+
+
         allProductViewHoler.bProductEdit.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( fragment.getActivity(), ProductEditActivity.class );
-                intent.putExtra( Constants.IMAGE, productDataList.get( i ).getImageResult() );
-                intent.putExtra( Constants.TOTAL_PRICE, productDataList.get( i ).getTotalPrice() );
-                fragment.getActivity().startActivity( intent );
+//                Intent intent = new Intent( fragment.getActivity(), ProductEditActivity.class );
+//                intent.putExtra( Constants.IMAGE, productDataList.get( i ).getImageResult() );
+//                intent.putExtra( Constants.TOTAL_PRICE, productDataList.get( i ).getTotalPrice() );
+//                fragment.getActivity().startActivity( intent );
             }
         } );
 

@@ -11,7 +11,7 @@ import android.util.Log;
 import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.data.LocalData;
 import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.retrofit.MyRetrofitChatApiInterface;
 import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.retrofit.ServiceGenerator;
-import com.crinoidtechnologies.mishicreationadmin.modelsVikas.RegisterData;
+import com.crinoidtechnologies.mishicreationadmin.models.RegisterData;
 
 import java.io.File;
 import java.io.FileInputStream;

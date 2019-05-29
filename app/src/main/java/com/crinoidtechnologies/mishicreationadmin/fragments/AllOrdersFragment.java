@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.adapter.OrderAdapter;
-import com.crinoidtechnologies.mishicreationadmin.modelsVikas.OrderData;
+import com.crinoidtechnologies.mishicreationadmin.models.OrderData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +22,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AllOrders.OnFragmentInteractionListener} interface
+ * {@link AllOrdersFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AllOrders#newInstance} factory method to
+ * Use the {@link AllOrdersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllOrders extends Fragment {
+public class AllOrdersFragment extends Fragment {
     private Context context;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -45,7 +45,7 @@ public class AllOrders extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AllOrders() {
+    public AllOrdersFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +55,11 @@ public class AllOrders extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AllOrders.
+     * @return A new instance of fragment AllOrdersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AllOrders newInstance(String param1, String param2) {
-        AllOrders fragment = new AllOrders();
+    public static AllOrdersFragment newInstance(String param1, String param2) {
+        AllOrdersFragment fragment = new AllOrdersFragment();
         Bundle args = new Bundle();
         args.putString( ARG_PARAM1, param1 );
         args.putString( ARG_PARAM2, param2 );

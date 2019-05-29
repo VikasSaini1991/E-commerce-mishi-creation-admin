@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".activities.ProductEditActivity">
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_above="@id/create_new_category"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AllCategory">
+    tools:context=".fragments.AllCategoryFragment">
 
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,6 +27,7 @@
 
 </FrameLayout>
     <Button
+        android:id="@+id/create_new_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

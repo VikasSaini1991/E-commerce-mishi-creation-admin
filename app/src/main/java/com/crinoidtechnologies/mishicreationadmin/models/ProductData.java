@@ -1,4 +1,4 @@
-package com.crinoidtechnologies.mishicreationadmin.modelsVikas;
+package com.crinoidtechnologies.mishicreationadmin.models;
 
 public class ProductData {
     private  String totalPrice;
