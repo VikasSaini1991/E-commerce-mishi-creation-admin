@@ -16,7 +16,7 @@ public class InsertProductData {
     @SerializedName("regular_price")
     @Expose
     private String regularPrice;
-    @SerializedName("price")
+    @SerializedName("sale_price")
     @Expose
     private String price;
     @SerializedName("description")

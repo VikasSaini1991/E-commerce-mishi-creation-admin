@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/color_light_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.ProductEditActivity">
 <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:titleTextColor="@color/color_white"
     android:background="@color/color_dark_blue"
     android:minHeight="?attr/actionBarSize">
 
@@ -18,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
          android:layout_below="@id/toolbar"
-         android:layout_margin="30dp">
+         android:layout_margin="20dp">
         <RelativeLayout
             android:id="@+id/image_button"
             android:layout_width="match_parent"
@@ -42,11 +44,13 @@
         <Spinner
             android:id="@+id/spinner_products"
             android:layout_marginTop="10dp"
+            android:entries="@array/product_items"
             android:layout_below="@id/image_button"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
-
+            android:layout_height="50dp"
+            android:padding="5dp">
         </Spinner>
 
 

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,8 @@ import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.CurrentSessio
 import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.serverUtils.ServerRequest;
 import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.serverUtils.ServerRequestCallback;
 import com.crinoidtechnologies.mishicreationadmin.controllers.ServerController;
+import com.crinoidtechnologies.mishicreationadmin.fragments.AllCategoryFragment;
+import com.crinoidtechnologies.mishicreationadmin.fragments.AllProductsFragment;
 import com.crinoidtechnologies.mishicreationadmin.models.AllCategoryDatum;
 import com.crinoidtechnologies.mishicreationadmin.models.AllProductsDatum;
 import com.crinoidtechnologies.mishicreationadmin.models.Category;
@@ -58,8 +62,9 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
     private ImageView ivProductEditImage;
     private AlertDialog.Builder pictureDialog;
     private TextView tvProductEditTotalPrice;
-    private Button bChangeProductImage;
-    private String totalPrice;
+    private Button bChangeProductImage,bSaveProduct;
+    private String totalPrice ;
+    private String  selectedCategory=" ";
     private String createNewProduct = " ";
     private String dowanloadImageUri;
     private int productImage;
@@ -72,6 +77,10 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
     private ArrayAdapter<String> arrayCategoryListadapter;
     private ArrayList<AllCategoryDatum> allCategoryDatumArrayList=new ArrayList<>(  );
     private ArrayList<String> arrayListCategory=new ArrayList<>(  );
+    private ArrayList<Integer> arrayListCategoryId=new ArrayList<>(  );
+    public ProgressDialog progressDialog;
+    private FragmentManager fragmentManager;
+    private  int getCategoryId=0;
 
 
 
@@ -84,18 +93,50 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         setContentView( R.layout.activity_product_edit );
         initViews();
         initData();
+        addCategoryList();
         setCategoryListSpinner();
+
+    }
+    public void addCategoryList()
+    {
+        for(int i=0; i<CurrentSession.getCI().getLocalData().getCategoryList().size(); i++)
+        {
+            arrayListCategory.add(  CurrentSession.getCI().getLocalData().getCategoryList().get( i ).getName());
+            arrayListCategoryId.add( CurrentSession.getCI().getLocalData().getCategoryList().get( i ).getId() );
+            Log.d( TAG, "addCategoryList: "+CurrentSession.getCI().getLocalData().getCategoryList().get( i )
+            .getId());
+
+        }
+
+        Log.d( TAG, "addCategoryList: "+arrayListCategory );
+
     }
 
 
 
     private void setCategoryListSpinner() {
 
-//        arrayCategoryListadapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item, CurrentSession.getCI().getLocalData().getCategoryList().get( 0 ).getName() )
-//        arrayCategoryListadapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-////        refreshAdapterSpiner();
-//        categoryListSpinner.setAdapter( arrayCategoryListadapter );
+        arrayCategoryListadapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, arrayListCategory );
+        arrayCategoryListadapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        categoryListSpinner.setAdapter( arrayCategoryListadapter );
 //        arrayCategoryListadapter.notifyDataSetChanged();
+        categoryListSpinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                selectedCategory= (String) parent.getItemAtPosition( position );
+                getCategoryId=   arrayListCategoryId.get( position );
+                Log.d( TAG, "onItemSelected: "+selectedCategory );
+                Log.d( TAG, "onItemSelected: "+getCategoryId );
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        } );
     }
 
     private void initData() {
@@ -108,7 +149,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
 
     private void initViews() {
 
-        pd = new ProgressDialog( this );
+        progressDialog = new ProgressDialog( this );
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         categoryList = new ArrayList<>();
@@ -121,6 +162,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
 
 
         bChangeProductImage = findViewById( R.id.b_change_product_image );
+        bSaveProduct=findViewById( R.id.b_product_save );
         ivProductEditImage = findViewById( R.id.iv_product_image );
         tvProductEditTotalPrice = findViewById( R.id.et_product_price );
 
@@ -147,6 +189,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled( true );
         bChangeProductImage.setOnClickListener( this );
+        bSaveProduct.setOnClickListener( this );
 
 
     }
@@ -219,7 +262,8 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
             Uri tempUri = getImageUri( thumbnail );
             // CALL THIS METHOD TO GET THE ACTUAL PATH
             File finalFile = new File( getRealPathFromURI( tempUri ) );
-            //filePath= Uri.fromFile( finalFile );
+            filePath= Uri.fromFile( finalFile );
+            Log.d( TAG, "onActivityResult: camera"+filePath );
             ivProductEditImage.setImageBitmap( thumbnail );
             Toast.makeText( ProductEditActivity.this, R.string.image_saved, Toast.LENGTH_SHORT ).show();
         }
@@ -261,27 +305,40 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         if (v.equals( bChangeProductImage )) {
             openGallaryAndCamera();
         }
+        if(v.equals( bSaveProduct ))
+        {
+            uploadImage();
+
+        }
 
     }
 
 
     private void createProduct() {
+//        Log.d( TAG, "createProduct: "+selectedCategory );
+        Log.d( TAG, "createProduct: 1"+etProductSalePrice.getText().toString() );
+        Log.d( TAG, "createProduct: 2"+etProductPrice.getText().toString() );
 
-//        pd.setMessage(getString(R.string.creating_product));
-//        pd.show();
+        Toast.makeText( ProductEditActivity.this, R.string.sucessfully_upload, Toast.LENGTH_SHORT ).show();
+        progressDialog.setMessage(getString(R.string.creating_product));
+        progressDialog.show();
 
         // add data to the list , sample data
-        categoryList.add( new Category( 10 ) );
+        categoryList.add( new Category( getCategoryId) );
         imageList.add( new Image( dowanloadImageUri ) );
+        Log.d( TAG, "createProduct: "+selectedCategory );
 
         ServerController.getInstance().createProductCall( new InsertProductData( etProductTitle.getText().toString(),
-                "simple", etProductSalePrice.getText().toString(), "10", "A newly fashion arise on ", "New Trend"
+                "simple", etProductSalePrice.getText().toString(), etProductPrice.getText().toString(), "A newly fashion arise on ", "New Trend"
                 , categoryList, imageList ), new ServerRequestCallback<AllProductsDatum>() {
             @Override
             public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {
-
-//                pd.dismiss();
+                progressDialog.dismiss();
+//                fragmentManager = getSupportFragmentManager();
+//                fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProductsFragment() ).commit();
                 Log.d( TAG, "onSuccess: ( CREATE PRODUCT API )-( PRODCUT NAME ): " + dataJson.getName() );
+                Log.d( TAG, "onSuccess: regular price"+dataJson.getRegularPrice() );
+                Log.d( TAG, "onSuccess: price"+dataJson.getPrice() );
                 Log.d( TAG, "onSuccess: ( CREATE PRODUT API )-( PRODCUT IMAGE ): " + dataJson.getImages().get( 0 ).getSrc() );
             }
 
@@ -289,7 +346,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
             public void onFailure(ServerRequest request, Error error) {
 
                 Log.d( TAG, "onFailure: ( CREATE PRODCUT API )-( FAILURE ) " );
-//                pd.dismiss();
+                progressDialog.dismiss();
 
             }
         } );
@@ -299,15 +356,15 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         Log.d( TAG, "uploadImage: " );
         if (filePath != null) {
             Log.d( TAG, "uploadImage: " + filePath );
-//            progressDialog.setTitle( R.string.uploading );
-//            progressDialog.show();
+            progressDialog.setTitle( R.string.uploading );
+            progressDialog.show();
 
             StorageReference ref = storageReference.child( "images/" + UUID.randomUUID().toString() );
             ref.putFile( filePath )
                     .addOnSuccessListener( new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            progressDialog.dismiss();
+                            progressDialog.dismiss();
                             Log.d( TAG, "onSuccess: 1 " + taskSnapshot.getMetadata().getPath() );
 //                            Log.d( TAG, "onSuccess: "+taskSnapshot.getMetadata().getName() );
 
@@ -320,6 +377,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
                                     if (createNewProduct != null) {
                                         if (createNewProduct.equals( Constants.CREATE_NEW_PRODUCT )) {
                                             createProduct();
+                                            Log.d( TAG, "onSuccess: "+dowanloadImageUri );
                                         }
 
                                     } else {
@@ -341,7 +399,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
                     .addOnFailureListener( new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-//                            progressDialog.dismiss();
+                            progressDialog.dismiss();
                             Toast.makeText( ProductEditActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT ).show();
                         }
                     } )
@@ -350,7 +408,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-//                            progressDialog.setMessage( "Uploaded " + (int) progress + "%" );
+                            progressDialog.setMessage( "Uploaded " + (int) progress + "%" );
                         }
                     } );
         }

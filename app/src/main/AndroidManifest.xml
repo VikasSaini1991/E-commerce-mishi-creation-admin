@@ -29,7 +29,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.ProductEditActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".activities.OrderDetailsActivity"
             android:label="@string/order_details" />
