@@ -8,12 +8,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.adapter.OrderAdapter;
+import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.serverUtils.ServerRequest;
+import com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.serverUtils.ServerRequestCallback;
+import com.crinoidtechnologies.mishicreationadmin.controllers.ServerController;
+import com.crinoidtechnologies.mishicreationadmin.models.AllOrdersDatum;
 import com.crinoidtechnologies.mishicreationadmin.models.OrderData;
 
 import java.util.ArrayList;
@@ -28,6 +33,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class AllOrdersFragment extends Fragment {
+    String TAG="AllOrdersFragment";
     private Context context;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -141,5 +147,33 @@ public class AllOrdersFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    private void allOrdersData() {
+
+//        pd.setMessage(getString(R.string.fetching_orders));
+//        pd.show();
+
+
+        ServerController.getInstance().allOrdersCall( new ServerRequestCallback<AllOrdersDatum>() {
+            @Override
+            public void onSuccess(ServerRequest request, ArrayList<AllOrdersDatum> data, AllOrdersDatum dataJson) {
+
+//                pd.dismiss();
+                Log.d(TAG, "onSuccess: ( ALL ORDERS API )-( ALL ORDERS NAME ): "
+                        + data.get(1).getLineItems().get(0).getName());
+
+            }
+
+            @Override
+            public void onFailure(ServerRequest request, Error error) {
+
+                Log.d(TAG, "onFailure: ( ALL ORDERS API )-(FAILURE) "+error);
+//                pd.dismiss();
+
+            }
+        });
+
+
+
     }
 }

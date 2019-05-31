@@ -346,19 +346,19 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void allProductFetch() {
+    public void allProductFetch() {
 
             fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProductsFragment() ).commit();
 
     }
 
-    private void allOrderFetch() {
+    public void allOrderFetch() {
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllOrdersFragment() ).commit();
     }
 
-    private void allCategoryFetch() {
+    public void allCategoryFetch() {
 
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllCategoryFragment() ).commit();

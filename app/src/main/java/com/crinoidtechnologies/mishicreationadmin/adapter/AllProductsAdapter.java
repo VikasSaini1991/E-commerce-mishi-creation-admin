@@ -1,5 +1,6 @@
 package com.crinoidtechnologies.mishicreationadmin.adapter;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,8 @@ import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
 
+import com.crinoidtechnologies.mishicreationadmin.activities.ProductEditActivity;
+import com.crinoidtechnologies.mishicreationadmin.fragments.AllProductsFragment;
 import com.crinoidtechnologies.mishicreationadmin.fragments.ProductListFragment;
 import com.crinoidtechnologies.mishicreationadmin.models.AllCategoryDatum;
 import com.crinoidtechnologies.mishicreationadmin.models.AllProductsDatum;
@@ -29,9 +32,12 @@ public class AllProductsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
+
 //        Log.d( TAG, "getItem: "+productListTitle.size() );
         for (int j = 0; j < categoryListTitle.size(); j++) {
             if (j == i) {
+                fragment=new ProductListFragment();
+                Bundle arg=new Bundle(  );
                 Log.d( TAG, "getItem: "+categoryListTitle.get( j ).getName() );
                 fragment = new ProductListFragment();
                 break;
@@ -39,6 +45,7 @@ public class AllProductsAdapter extends FragmentStatePagerAdapter {
         }
         return fragment;
     }
+
 
     @Override
     public int getCount() {

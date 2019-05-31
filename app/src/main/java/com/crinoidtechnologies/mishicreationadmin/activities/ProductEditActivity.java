@@ -46,6 +46,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -63,7 +64,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
     private AlertDialog.Builder pictureDialog;
     private TextView tvProductEditTotalPrice;
     private Button bChangeProductImage,bSaveProduct;
-    private String totalPrice ;
+    private String totalPrice ,changeName,changePrice,changeSalePrice,changProductImage;
     private String  selectedCategory=" ";
     private String createNewProduct = " ";
     private String dowanloadImageUri;
@@ -81,6 +82,9 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
     public ProgressDialog progressDialog;
     private FragmentManager fragmentManager;
     private  int getCategoryId=0;
+    private  int getProductCategoryId;
+    private int getProductId;
+
 
 
 
@@ -145,6 +149,27 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         productImage = intent.getExtras().getInt( Constants.IMAGE );
         ivProductEditImage.setImageResource( productImage );
         tvProductEditTotalPrice.setText( totalPrice );
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Log.d( TAG, "initViews: if" );
+            changeName=bundle.getString( Constants.PRODUCT_NAME );
+            changePrice=bundle.getString( Constants.TOTAL_PRICE );
+            changeSalePrice=bundle.getString( Constants.SALE_PRICE );
+            changProductImage=bundle.getString( Constants.IMAGE );
+            getProductCategoryId=bundle.getInt( Constants.PRODUCT_CATEGORY_ID );
+            getProductId=bundle.getInt( Constants.PRODUCT_ID );
+
+            etProductTitle.setText( changeName );
+            etProductPrice.setText( changePrice );
+            etProductSalePrice.setText(changeSalePrice  );
+            Picasso.with( getApplicationContext() ).load( changProductImage ).into( ivProductEditImage );
+
+
+            Log.d( TAG, "initViews: all edit data" + "product id"+getProductId +" productName"+changeName +"price"+changePrice +" sale price"+changeSalePrice +" product image"+changProductImage +" Category Id "+getProductCategoryId);
+
+        } else {
+            Log.d( TAG, "initViews: else" );
+        }
     }
 
     private void initViews() {
@@ -334,8 +359,8 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {
                 progressDialog.dismiss();
-//                fragmentManager = getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProductsFragment() ).commit();
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProductsFragment() ).commit();
                 Log.d( TAG, "onSuccess: ( CREATE PRODUCT API )-( PRODCUT NAME ): " + dataJson.getName() );
                 Log.d( TAG, "onSuccess: regular price"+dataJson.getRegularPrice() );
                 Log.d( TAG, "onSuccess: price"+dataJson.getPrice() );
@@ -381,7 +406,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
                                         }
 
                                     } else {
-//                                        updateProduct();
+                                        updateProduct();
                                     }
 
 
@@ -412,6 +437,36 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
                         }
                     } );
         }
+    }
+    private void updateProduct() {
+
+        progressDialog.setMessage(getString(R.string.updating_product));
+        progressDialog.show();
+        categoryList.add( new Category( getCategoryId) );
+        imageList.add( new Image( dowanloadImageUri ) );
+
+        ServerController.getInstance().updateProductCall(getProductId, new InsertProductData(etProductTitle.getText().toString(), "simple",
+                etProductPrice.getText().toString(), etProductSalePrice.getText().toString(), null,null, categoryList, imageList), new ServerRequestCallback<AllProductsDatum>() {
+            @Override
+            public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {
+
+                progressDialog.dismiss();
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProductsFragment() ).commit();
+                Log.d(TAG, "onSuccess: ( UPDATE PRODUCT API )-( UPDATE PRODUCT DESCRIPTION ): " + dataJson.getDescription() );
+                Log.d(TAG, "onSuccess: ( UPDATE PRODUCT API )-( UPDATE PRODUCT IMAGE ): " + dataJson.getImages().get(0).getSrc());
+
+            }
+
+            @Override
+            public void onFailure(ServerRequest request, Error error) {
+
+                Log.d(TAG, "onFailure: (UPDATE PRODUCT API )-(FAILURE) ");
+                progressDialog.dismiss();
+
+            }
+        });
+
     }
 }
 

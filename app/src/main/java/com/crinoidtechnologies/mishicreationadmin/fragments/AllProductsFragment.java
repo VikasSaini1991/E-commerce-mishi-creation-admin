@@ -82,7 +82,7 @@ public class AllProductsFragment extends Fragment implements View.OnClickListene
 
     private void allCategoriesData() {
 
-        pd.setMessage(getString(R.string.fetching_categories));
+        pd.setMessage(getString(R.string.fetching_products));
         pd.show();
 
         ServerController.getInstance().allCategoriesDataCall(new ServerRequestCallback<AllCategoryDatum>() {
