@@ -1,11 +1,14 @@
 
 package com.crinoidtechnologies.mishicreationadmin.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LineItem {
+public class LineItem implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -49,6 +52,52 @@ public class LineItem {
     @SerializedName("price")
     @Expose
     private Float price;
+
+    protected LineItem(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        name = in.readString();
+        if (in.readByte() == 0) {
+            productId = null;
+        } else {
+            productId = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            variationId = null;
+        } else {
+            variationId = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            quantity = null;
+        } else {
+            quantity = in.readInt();
+        }
+        taxClass = in.readString();
+        subtotal = in.readString();
+        subtotalTax = in.readString();
+        total = in.readString();
+        totalTax = in.readString();
+        if (in.readByte() == 0) {
+            price = null;
+        } else {
+            price = in.readFloat();
+        }
+    }
+
+    public static final Creator<LineItem> CREATOR = new Creator<LineItem>() {
+        @Override
+        public LineItem createFromParcel(Parcel in) {
+            return new LineItem( in );
+        }
+
+        @Override
+        public LineItem[] newArray(int size) {
+            return new LineItem[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -162,4 +211,48 @@ public class LineItem {
         this.price = price;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( id );
+        }
+        dest.writeString( name );
+        if (productId == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( productId );
+        }
+        if (variationId == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( variationId );
+        }
+        if (quantity == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( quantity );
+        }
+        dest.writeString( taxClass );
+        dest.writeString( subtotal );
+        dest.writeString( subtotalTax );
+        dest.writeString( total );
+        dest.writeString( totalTax );
+        if (price == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeFloat( price );
+        }
+    }
 }

@@ -1,11 +1,14 @@
 
 package com.crinoidtechnologies.mishicreationadmin.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AllOrdersDatum {
+public class AllOrdersDatum implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -133,6 +136,62 @@ public class AllOrdersDatum {
     @SerializedName("_links")
     @Expose
     private Links links;
+
+    protected AllOrdersDatum(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            parentId = null;
+        } else {
+            parentId = in.readInt();
+        }
+        number = in.readString();
+        orderKey = in.readString();
+        createdVia = in.readString();
+        version = in.readString();
+        status = in.readString();
+        currency = in.readString();
+        dateCreated = in.readString();
+        dateCreatedGmt = in.readString();
+        dateModified = in.readString();
+        dateModifiedGmt = in.readString();
+        discountTotal = in.readString();
+        discountTax = in.readString();
+        shippingTotal = in.readString();
+        shippingTax = in.readString();
+        cartTax = in.readString();
+        total = in.readString();
+        totalTax = in.readString();
+        byte tmpPricesIncludeTax = in.readByte();
+        pricesIncludeTax = tmpPricesIncludeTax == 0 ? null : tmpPricesIncludeTax == 1;
+        if (in.readByte() == 0) {
+            customerId = null;
+        } else {
+            customerId = in.readInt();
+        }
+        customerIpAddress = in.readString();
+        customerUserAgent = in.readString();
+        customerNote = in.readString();
+        paymentMethod = in.readString();
+        paymentMethodTitle = in.readString();
+        transactionId = in.readString();
+        cartHash = in.readString();
+    }
+
+    public static final Creator<AllOrdersDatum> CREATOR = new Creator<AllOrdersDatum>() {
+        @Override
+        public AllOrdersDatum createFromParcel(Parcel in) {
+            return new AllOrdersDatum( in );
+        }
+
+        @Override
+        public AllOrdersDatum[] newArray(int size) {
+            return new AllOrdersDatum[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -470,4 +529,55 @@ public class AllOrdersDatum {
         this.links = links;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( id );
+        }
+        if (parentId == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( parentId );
+        }
+        dest.writeString( number );
+        dest.writeString( orderKey );
+        dest.writeString( createdVia );
+        dest.writeString( version );
+        dest.writeString( status );
+        dest.writeString( currency );
+        dest.writeString( dateCreated );
+        dest.writeString( dateCreatedGmt );
+        dest.writeString( dateModified );
+        dest.writeString( dateModifiedGmt );
+        dest.writeString( discountTotal );
+        dest.writeString( discountTax );
+        dest.writeString( shippingTotal );
+        dest.writeString( shippingTax );
+        dest.writeString( cartTax );
+        dest.writeString( total );
+        dest.writeString( totalTax );
+        dest.writeByte( (byte) (pricesIncludeTax == null ? 0 : pricesIncludeTax ? 1 : 2) );
+        if (customerId == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( customerId );
+        }
+        dest.writeString( customerIpAddress );
+        dest.writeString( customerUserAgent );
+        dest.writeString( customerNote );
+        dest.writeString( paymentMethod );
+        dest.writeString( paymentMethodTitle );
+        dest.writeString( transactionId );
+        dest.writeString( cartHash );
+    }
 }

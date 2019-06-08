@@ -35,11 +35,17 @@ public class AllProductsAdapter extends FragmentStatePagerAdapter {
 
 //        Log.d( TAG, "getItem: "+productListTitle.size() );
         for (int j = 0; j < categoryListTitle.size(); j++) {
+
+
+
             if (j == i) {
-                fragment=new ProductListFragment();
-                Bundle arg=new Bundle(  );
-                Log.d( TAG, "getItem: "+categoryListTitle.get( j ).getName() );
+                Log.d( TAG, "getItem: category id "+categoryListTitle.get( j ).getId() );
+                Integer id=categoryListTitle.get( j ).getId();
+                Log.d( TAG, "getItem: id"+id );
                 fragment = new ProductListFragment();
+                Bundle bundle=new Bundle(  );
+                bundle.putInt( "id",categoryListTitle.get( j ).getId() );
+                fragment.setArguments( bundle );
                 break;
             }
         }

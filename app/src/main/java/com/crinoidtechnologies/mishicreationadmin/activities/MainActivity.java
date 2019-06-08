@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
         inItViews();
+//        fetchProductCategoryWise();
 
     }
 
@@ -411,6 +412,21 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    public void fetchProductCategoryWise()
+    {
+        ServerController.getInstance().fetchProductCategoryWise( 85, new ServerRequestCallback<AllProductsDatum>() {
+            @Override
+            public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum data1) {
+                Log.d( TAG, "onSuccess: "+data.get( 0 ).getName() );
+            }
+
+            @Override
+            public void onFailure(ServerRequest request, Error error) {
+
+            }
+        } );
     }
 
 

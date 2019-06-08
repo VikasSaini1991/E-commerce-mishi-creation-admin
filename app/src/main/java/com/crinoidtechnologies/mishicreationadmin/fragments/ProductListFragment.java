@@ -1,5 +1,6 @@
 package com.crinoidtechnologies.mishicreationadmin.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -26,6 +27,7 @@ import com.crinoidtechnologies.mishicreationadmin.models.ProductData;
 import java.util.ArrayList;
 import java.util.List;
 
+//@SuppressLint("ValidFragment")
 public class ProductListFragment extends Fragment {
     String TAG="ProductListFragment";
 //    private ProgressDialog pd;
@@ -35,13 +37,23 @@ public class ProductListFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<AllProductsDatum> productDataList=new ArrayList<>(  );
     private Activity activity;
+    Integer categoryId=0;
+
+//    public ProductListFragment(Integer id) {
+//        categoryId=id;
+//        Log.d( TAG, "ProductListFragment: "+id );
+//
+//    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.fragment_product_list, container, false );
         initViews();
-        allProductsData();
+//        allProductsData();
+        fetchProductCategoryWise();
+
+
 //        productDataList = new ArrayList<>();
 //        productDataList.add( new ProductData( "100", R.drawable.a ) );
 //        productDataList.add( new ProductData( "200", R.drawable.logo ) );
@@ -59,6 +71,8 @@ public class ProductListFragment extends Fragment {
 
     private void initViews() {
 //        pd=new ProgressDialog( getActivity() );
+        categoryId=getArguments().getInt( "id" );
+        Log.d( TAG, "initViews: "+categoryId );
     }
 
     private void allProductsData() {
@@ -84,5 +98,23 @@ public class ProductListFragment extends Fragment {
         });
 
     }
+    public void fetchProductCategoryWise()
+    {
+        ServerController.getInstance().fetchProductCategoryWise( categoryId, new ServerRequestCallback<AllProductsDatum>() {
+            @Override
+            public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum data1) {
+//                Log.d( TAG, "onSuccess: "+data.get( 0 ).getName() );
+                productDataList.addAll( data );
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(ServerRequest request, Error error) {
+                Log.d( TAG, "onFailure: (Fetch Product Category Wise)" );
+
+            }
+        } );
+    }
+
 
 }

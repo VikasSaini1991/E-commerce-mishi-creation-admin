@@ -84,13 +84,8 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
     private  int getCategoryId=0;
     private  int getProductCategoryId;
     private int getProductId;
-
-
-
-
     ArrayList<Category> categoryList;
     ArrayList<Image> imageList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -354,7 +349,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         Log.d( TAG, "createProduct: "+selectedCategory );
 
         ServerController.getInstance().createProductCall( new InsertProductData( etProductTitle.getText().toString(),
-                "simple", etProductSalePrice.getText().toString(), etProductPrice.getText().toString(), "A newly fashion arise on ", "New Trend"
+                "simple",etProductSalePrice.getText().toString() , etProductPrice.getText().toString(), "A newly fashion arise on ", "New Trend"
                 , categoryList, imageList ), new ServerRequestCallback<AllProductsDatum>() {
             @Override
             public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {

@@ -76,8 +76,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     intent.putExtra( Constants.IMAGE, allCategoryDatumlist.getImage().getSrc() );
                     intent.putExtra( String.valueOf( Constants.CATEGORY_ID ),allCategoryDatumlist.getId() );
                     intent.putExtra( Constants.CATEGORY_EDIT,"CATEGORY EDIT" );
+                    intent.putExtra( Constants.CATEGORY_NAME,allCategoryDatumlist.getName() );
                 }
                 else {
+                    intent.putExtra( String.valueOf( Constants.CATEGORY_ID ),allCategoryDatumlist.getId() );
+                    intent.putExtra( Constants.CATEGORY_NAME,allCategoryDatumlist.getName() );
 //                    intent.putExtra( Constants.IMAGE,categoryDataList.get( 0 ).getImage().getSrc() );
 
 

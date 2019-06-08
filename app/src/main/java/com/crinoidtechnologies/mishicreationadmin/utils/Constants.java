@@ -23,5 +23,6 @@ public class Constants {
     public  static  String UPLOAD_BUTTON="UPLOAD";
     public  static String PRODUCT_ID="Product Id";
     public static String PRODUCT_CATEGORY_ID="Product Category Id";
+    public  static String CATEGORY_NAME="Category Name";
 
 }

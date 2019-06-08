@@ -38,6 +38,7 @@ public class AllOrdersFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private LinearLayoutManager linearLayoutManager;
+    public ArrayList<AllOrdersDatum> allOrdersArrayList = new ArrayList<>();
     private List<OrderData> orderDataList;
     private Activity activity;
     // TODO: Rename parameter arguments, choose names that match
@@ -48,7 +49,6 @@ public class AllOrdersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     public AllOrdersFragment() {
@@ -89,23 +89,26 @@ public class AllOrdersFragment extends Fragment {
         View view = inflater.inflate( R.layout.fragment_all_orders, container, false );
         ((AppCompatActivity) getActivity()).getSupportActionBar();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( "All Orders" );
-        orderDataList = new ArrayList<>();
-        orderDataList.add( new OrderData( "vikas", "bhiwani", "5", "9355529720", "200.50" ) );
-        orderDataList.add( new OrderData( "vikas", "bhiwani", "4", "123456", "200.50" ) );
-        orderDataList.add( new OrderData( "Rahul", "bhiwani", "3", "9812644069", "200.50" ) );
-        orderDataList.add( new OrderData( "Akshay", "bhiwani", "2", "9138176259", "200.50" ) );
-        orderDataList.add( new OrderData( "vivek", "bhiwani", "8", "123456", "200.50" ) );
-        orderDataList.add( new OrderData( "shryansh", "bhiwani", "1", "123456", "200.50" ) );
-        orderDataList.add( new OrderData( "suhbam", "bhiwani", "3", "8059495249", "200.50" ) );
-        orderDataList.add( new OrderData( "nand", "bhiwani", "4", "123456", "200.50" ) );
-        orderDataList.add( new OrderData( "vinod", "bhiwani", "3", "123456", "200.50" ) );
+        allOrdersData();
+        allOrdersArrayList.clear();
+//        orderDataList = new ArrayList<>();
+//        orderDataList.add( new OrderData( "vikas", "bhiwani", "5", "9355529720", "200.50" ) );
+//        orderDataList.add( new OrderData( "vikas", "bhiwani", "4", "123456", "200.50" ) );
+//        orderDataList.add( new OrderData( "Rahul", "bhiwani", "3", "9812644069", "200.50" ) );
+//        orderDataList.add( new OrderData( "Akshay", "bhiwani", "2", "9138176259", "200.50" ) );
+//        orderDataList.add( new OrderData( "vivek", "bhiwani", "8", "123456", "200.50" ) );
+//        orderDataList.add( new OrderData( "shryansh", "bhiwani", "1", "123456", "200.50" ) );
+//        orderDataList.add( new OrderData( "suhbam", "bhiwani", "3", "8059495249", "200.50" ) );
+//        orderDataList.add( new OrderData( "nand", "bhiwani", "4", "123456", "200.50" ) );
+//        orderDataList.add( new OrderData( "vinod", "bhiwani", "3", "123456", "200.50" ) );
 
 
         recyclerView = view.findViewById( R.id.order_recyler_view );
         linearLayoutManager = new LinearLayoutManager( getActivity() );
-        adapter = new OrderAdapter( context, orderDataList, activity, this );
+        adapter = new OrderAdapter( context, allOrdersArrayList, activity, this );
         recyclerView.setLayoutManager( linearLayoutManager );
         recyclerView.setAdapter( adapter );
+
         return view;
 
     }
@@ -159,8 +162,11 @@ public class AllOrdersFragment extends Fragment {
             public void onSuccess(ServerRequest request, ArrayList<AllOrdersDatum> data, AllOrdersDatum dataJson) {
 
 //                pd.dismiss();
+                allOrdersArrayList.addAll(data);
+                adapter.notifyDataSetChanged();
                 Log.d(TAG, "onSuccess: ( ALL ORDERS API )-( ALL ORDERS NAME ): "
                         + data.get(1).getLineItems().get(0).getName());
+                Log.d( TAG, "onSuccess: item"+data.get( 0 ).getBilling().getEmail() );
 
             }
 

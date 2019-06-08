@@ -22,6 +22,7 @@
     // for internet dialog
     <string name="no_internet_available">No internet available</string>
     <string name="delete">Delete</string>
+    <string name="are_you_sure_you_want_to_remove">Are you sure, you want to remove</string>
     <string name="suggestion">Suggestion</string>
     <string name="Bug">Bug</string>
     <string name="Help">Help</string>
@@ -70,12 +71,13 @@
     <string name="update_sucessfully">Update Sucessfully...</string>
     <string name="save_category">Save</string>
     <string name="product_edit">Product Edit</string>
-
+    <string name="category_name">Category Name :</string>
     <string name="pickUp">Pickup</string>
     <string name="image_saved">Image Saved</string>
     <string name="select_action">Select Action</string>
     <string name="after_discount">After Discount(Price) : </string>
     <string name="price">Price : </string>
+    <string name="category_name_is_required">Category name is required!</string>
     <string-array name="product_items">
         <item>All</item>
         <item>Ambee</item>
@@ -94,6 +96,9 @@
     <string name="title">Title :</string>
     <string name="actual_price">Sale-Price :</string>
     <string name="product_id">Product Id :</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 
 
 </resources>

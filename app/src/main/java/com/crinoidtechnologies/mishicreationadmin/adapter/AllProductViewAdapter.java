@@ -1,8 +1,10 @@
 package com.crinoidtechnologies.mishicreationadmin.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crinoidtechnologies.mishicreationadmin.R;
 import com.crinoidtechnologies.mishicreationadmin.activities.MainActivity;
@@ -34,13 +37,13 @@ import java.util.List;
 
 public class AllProductViewAdapter extends RecyclerView.Adapter<AllProductViewAdapter.AllProductViewHoler> {
     String TAG = "AllProductViewAdapter";
-    ;
+    private AlertDialog alertDialog;
     public Context context;
     private ArrayList<AllProductsDatum> productDataList;
     public Activity activity;
     public Fragment fragment;
     private FragmentManager fragmentManager;
-    public ProgressDialog progressDialog;
+    private  ProgressDialog progressDialog;
 
 
     public AllProductViewAdapter(Context context, ArrayList<AllProductsDatum> productDataList, Activity activity, Fragment fragment) {
@@ -53,13 +56,14 @@ public class AllProductViewAdapter extends RecyclerView.Adapter<AllProductViewAd
     @NonNull
     @Override
     public AllProductViewHoler onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
         View view = LayoutInflater.from( viewGroup.getContext() ).inflate( R.layout.products_list_card_view, viewGroup, false );
 
         return new AllProductViewHoler( view );
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AllProductViewHoler allProductViewHoler, final int i) {
+    public void onBindViewHolder(@NonNull final AllProductViewHoler allProductViewHoler, final int i) {
         final int productId = productDataList.get( i ).getId();
 
         Picasso.with( fragment.getContext() ).load( productDataList.get( i ).getImages().get( 0 ).getSrc() ).into( allProductViewHoler.ivProductImage );
@@ -69,31 +73,58 @@ public class AllProductViewAdapter extends RecyclerView.Adapter<AllProductViewAd
         allProductViewHoler.bProductDelete.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                progressDialog.setMessage( R.string.deleting_product );
-                progressDialog.show();
-                ServerController.getInstance().deleteProductCall( productId, true, new ServerRequestCallback<AllProductsDatum>() {
+                AlertDialog.Builder builder = new AlertDialog.Builder( fragment.getContext() );
+                builder.setTitle( "Delete " + productDataList.get( i ).getName() );
+                builder.setMessage( "Are you sure you want to delete " + productDataList.get( i ).getName() );
+                builder.setPositiveButton( R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        progressDialog.setMessage( "Product Deleting...." );
+                        progressDialog.show();
+                        ServerController.getInstance().deleteProductCall( productId, true, new ServerRequestCallback<AllProductsDatum>() {
+                                    @Override
+                                    public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {
+                                        progressDialog.dismiss();
+                                        Log.d( TAG, "onClick: postion"+i );
+                                        Toast.makeText( fragment.getContext(),R.string.delete_sucessfully,Toast.LENGTH_SHORT ).show();
+                                        productDataList.remove( i );
+                                        notifyDataSetChanged();
+                                        Log.d( TAG, "onSuccess: ( DELETE PRODUCT API )-( DELETE PRODUCT NAME ): " + dataJson.getName() );
+//                         if(context instanceof MainActivity)
+//                         {
+//                             ((MainActivity)context).allProductFetch();
+//                         }
 
-                        progressDialog.dismiss();
-                        Log.d( TAG, "onSuccess: ( DELETE PRODUCT API )-( DELETE PRODUCT NAME ): " + dataJson.getName() );
-                         if(context instanceof MainActivity)
-                         {
-                             ((MainActivity)context).allProductFetch();
-                         }
 
 
 
-                    }
 
-                    @Override
-                    public void onFailure(ServerRequest request, Error error) {
+                                    }
 
-                        Log.d( TAG, "onFailure: (DELETE PRODUCT API )-(FAILURE) " );
-                        progressDialog.dismiss();
+                                    @Override
+                                    public void onFailure(ServerRequest request, Error error) {
+
+                                        Log.d( TAG, "onFailure: (DELETE PRODUCT API )-(FAILURE) " );
+                                        progressDialog.dismiss();
+
+                                    }
+                                }
+                        );
 
                     }
                 } );
+                builder.setNegativeButton( R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                } );
+                alertDialog = builder.create();
+                alertDialog.show();
+
 
 
             }

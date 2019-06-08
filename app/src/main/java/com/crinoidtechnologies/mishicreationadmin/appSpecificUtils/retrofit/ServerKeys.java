@@ -4,4 +4,5 @@ public class ServerKeys {
 
 public static final String ID="id";
 public static final String FORCE="force";
+public static final String CATEGORY="category";
 }

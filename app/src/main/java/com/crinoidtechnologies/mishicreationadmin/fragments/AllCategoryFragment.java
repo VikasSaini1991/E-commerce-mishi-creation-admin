@@ -41,7 +41,6 @@ import java.util.List;
  */
 public class AllCategoryFragment extends Fragment implements View.OnClickListener {
     String TAG = "AllCategoryFragment";
-    Context context;
     private Button bCreateNewCategory;
     public ProgressDialog pd;
     private RecyclerView recyclerView;
@@ -49,7 +48,7 @@ public class AllCategoryFragment extends Fragment implements View.OnClickListene
     private GridLayoutManager gridLayoutManager;
     public ArrayList<AllCategoryDatum> categoryDataList = new ArrayList<>();
     private Activity activity;
-    Fragment fragment;
+    private Fragment fragment;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -130,9 +129,9 @@ public class AllCategoryFragment extends Fragment implements View.OnClickListene
 
                 pd.dismiss();
                 categoryDataList.addAll( data );
+                adapter.notifyDataSetChanged();
                 Log.d( TAG, "onSuccess: body" + data.size() );
                 Log.d( TAG, "onSuccess: " );
-                adapter.notifyDataSetChanged();
                 Log.d( TAG, "onSuccess: (ALL CATEGORY API )-(CATEGORY NAME): " + data.get( 0 ).getName() );
                 Log.d( TAG, "onSuccess: " + data.get( 0 ).getImage().getSrc() );
 
@@ -141,7 +140,7 @@ public class AllCategoryFragment extends Fragment implements View.OnClickListene
             @Override
             public void onFailure(ServerRequest request, Error error) {
 
-                Log.d( TAG, "onFailure: (ALL CATEGORY API )-(FAILURE) " );
+                Log.d( TAG, "onFailure: (ALL CATEGORY API )-(FAILURE) "+error.getMessage() );
                 pd.dismiss();
 
             }

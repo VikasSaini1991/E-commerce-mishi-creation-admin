@@ -54,13 +54,13 @@ import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 public class CategoryEditActivity extends AppCompatActivity implements View.OnClickListener {
     String TAG = "CategoryEditActivity";
-    private String dowanloadImageUri, getImageUri;
+    private String dowanloadImageUri, categoryName;
     private String createNewCategory = "";
     private String categoryEdit = "";
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private Uri filePath;
-    AlertDialog.Builder pictureDialog;
+    private AlertDialog.Builder pictureDialog;
     private ImageView ivChangeImage;
     private EditText etChangeTitle;
     private Button bChangeImage, bSaveCategory, bDeleteCategory;
@@ -70,6 +70,7 @@ public class CategoryEditActivity extends AppCompatActivity implements View.OnCl
     private int getId;
     private FragmentManager fragmentManager;
     private ProgressDialog progressDialog;
+    private AlertDialog dialog;
 
 
     @Override
@@ -100,7 +101,9 @@ public class CategoryEditActivity extends AppCompatActivity implements View.OnCl
             Log.d( TAG, "initViews: if" );
             changeTtitle = bundle.getString( Constants.TITLE );
             changeImage = bundle.getString( Constants.IMAGE );
+            Log.d( TAG, "initViews: photo path"+changeImage );
             getId = (int) bundle.getInt( String.valueOf( Constants.CATEGORY_ID ) );
+            categoryName = bundle.getString( Constants.CATEGORY_NAME );
             Log.d( TAG, "initViews: " + getId );
 
         } else {
@@ -155,11 +158,38 @@ public class CategoryEditActivity extends AppCompatActivity implements View.OnCl
         }
         if (v.equals( bSaveCategory )) {
             Log.d( TAG, "onClick: save Button " );
-            uploadImage();
+            if(etChangeTitle.getText().toString().length()==0 )
+            {
+                etChangeTitle.setError( "Category name is required!");
+            }
+            else {
+                uploadImage();
+            }
+
         }
         if (v.equals( bDeleteCategory )) {
+            AlertDialog.Builder builder = new AlertDialog.Builder( CategoryEditActivity.this );
+            builder.setTitle( R.string.delete );
+            builder.setMessage( R.string.are_you_sure_you_want_to_remove );
+            builder.setNegativeButton( R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
 
-            deleteCategory();
+                }
+            } );
+            builder.setPositiveButton( R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    deleteCategory();
+
+                }
+            } );
+            dialog = builder.create();
+            dialog.show();
+
+
             Log.d( TAG, "onClick: " + getId );
 
         }
@@ -334,6 +364,7 @@ public class CategoryEditActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void createCategory() {
+        Log.d( TAG, "createCategory: "+dowanloadImageUri );
         Toast.makeText( CategoryEditActivity.this, R.string.sucessfully_upload, Toast.LENGTH_SHORT ).show();
         progressDialog.setTitle( R.string.save_sucessfully );
         progressDialog.show();
@@ -373,6 +404,7 @@ public class CategoryEditActivity extends AppCompatActivity implements View.OnCl
         Toast.makeText( CategoryEditActivity.this, R.string.delete_sucessfully, Toast.LENGTH_SHORT ).show();
         progressDialog.setMessage( getString( R.string.deleting_category ) );
         progressDialog.show();
+        Log.d( TAG, "deleteCategory: " + getId );
 
         ServerController.getInstance().deleteCategoryCall( getId, true, new ServerRequestCallback<AllCategoryDatum>() {
             @Override

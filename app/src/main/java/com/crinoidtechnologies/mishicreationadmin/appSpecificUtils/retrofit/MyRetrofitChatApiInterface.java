@@ -18,6 +18,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import static com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.retrofit.ServerKeys.CATEGORY;
 import static com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.retrofit.ServerKeys.FORCE;
 import static com.crinoidtechnologies.mishicreationadmin.appSpecificUtils.retrofit.ServerKeys.ID;
 
@@ -35,7 +36,6 @@ public interface MyRetrofitChatApiInterface {
     // create a category...
     @POST(ServerUrls.CREATE_A_CATEGORY_URL)
     Call<AllCategoryDatum> createCategory(@Body InsertCategoryData insertCategoryData);
-
     // create a product...
     @POST(ServerUrls.CREATE_A_PRODUCT_URL)
     Call<AllProductsDatum> createProduct(@Body InsertProductData insertProductData);
@@ -63,6 +63,9 @@ public interface MyRetrofitChatApiInterface {
     // delete a order...
     @DELETE(ServerUrls.DELETE_ORDER_URL)
     Call<AllOrdersDatum> deleteOrder(@Path(ID) long id, @Query(FORCE) boolean force);
+
+    @GET(ServerUrls.FETCH_PRODUCT_CATEGORY_WISE)
+    Call<ArrayList<AllProductsDatum>> fetchProductCategoryWise(@Query( CATEGORY ) long category);
 
 
 

@@ -76,7 +76,6 @@ public class ServerController {
                 if (response.isSuccessful()) {
                     callback.onSuccess(null, response.body(), null);
                 }
-
             }
 
             @Override
@@ -284,6 +283,25 @@ public class ServerController {
 
             }
         });
+    }
+
+    public  void  fetchProductCategoryWise(long id, final ServerRequestCallback<AllProductsDatum> callback)
+    {
+        Call<ArrayList<AllProductsDatum>> call=apiInterface().fetchProductCategoryWise(id);
+        call.enqueue( new Callback<ArrayList<AllProductsDatum>>() {
+            @Override
+            public void onResponse(Call<ArrayList<AllProductsDatum>> call, Response<ArrayList<AllProductsDatum>> response) {
+                if(response.isSuccessful())
+                {
+                    callback.onSuccess( null,response.body(),null );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<AllProductsDatum>> call, Throwable t) {
+
+            }
+        } );
     }
 
 }
