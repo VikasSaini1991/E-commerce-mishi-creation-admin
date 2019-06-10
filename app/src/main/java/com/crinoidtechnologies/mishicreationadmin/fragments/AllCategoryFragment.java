@@ -130,10 +130,10 @@ public class AllCategoryFragment extends Fragment implements View.OnClickListene
                 pd.dismiss();
                 categoryDataList.addAll( data );
                 adapter.notifyDataSetChanged();
-                Log.d( TAG, "onSuccess: body" + data.size() );
-                Log.d( TAG, "onSuccess: " );
-                Log.d( TAG, "onSuccess: (ALL CATEGORY API )-(CATEGORY NAME): " + data.get( 0 ).getName() );
-                Log.d( TAG, "onSuccess: " + data.get( 0 ).getImage().getSrc() );
+//                Log.d( TAG, "onSuccess: body" + data.size() );
+//                Log.d( TAG, "onSuccess: " );
+//                Log.d( TAG, "onSuccess: (ALL CATEGORY API )-(CATEGORY NAME): " + data.get( 0 ).getName() );
+//                Log.d( TAG, "onSuccess: " + data.get( 0 ).getImage().getSrc() );
 
             }
 

@@ -41,41 +41,44 @@
                 android:id="@+id/product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_below="@id/iv_product_image_card_view">
                 <TextView
                     android:id="@+id/product_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:text="@string/name"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:textColor="@color/color_black"
                     />
                 <TextView
                     android:id="@+id/tv_product_name"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="2dp"
                     android:layout_toRightOf="@id/product_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_black"
-                    android:textSize="15sp"
+                    android:layout_marginRight="5dp"
+                    android:textSize="13sp"
                     />
             </RelativeLayout>
             <RelativeLayout
-                android:id="@+id/one"
+                android:id="@+id/rl_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/product_name"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
                 <TextView
                     android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:text="@string/price"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:textColor="@color/color_black"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     />
 
                 <TextView
@@ -83,17 +86,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/price"
+                    android:layout_marginLeft="2dp"
                     android:textColor="@color/color_black"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
                 <TextView
                     android:id="@+id/after_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/after_discount"
                     android:textColor="@color/color_black"
-                    android:textSize="15sp"
-                    android:layout_marginLeft="10dp"
+                    android:textSize="13sp"
                     android:layout_toLeftOf="@id/tv_product_after_discount"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+
 
                     />
                 <TextView
@@ -101,16 +107,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_black"
-                    android:textSize="15sp"
-                    android:text="500"
+                    android:textSize="13sp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     />
+
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/one">
+                android:layout_below="@+id/rl_price">
 
 
             <Button
@@ -121,7 +128,6 @@
                 android:text="@string/delete"
                 android:textColor="@color/color_white"
                 android:textSize="15sp"
-
                 />
             </RelativeLayout>
         </RelativeLayout>

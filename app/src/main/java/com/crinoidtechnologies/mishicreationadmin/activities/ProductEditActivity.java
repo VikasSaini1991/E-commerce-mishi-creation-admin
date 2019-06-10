@@ -151,6 +151,7 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
             changePrice=bundle.getString( Constants.TOTAL_PRICE );
             changeSalePrice=bundle.getString( Constants.SALE_PRICE );
             changProductImage=bundle.getString( Constants.IMAGE );
+            Log.d( TAG, "initData: picture"+changProductImage );
             getProductCategoryId=bundle.getInt( Constants.PRODUCT_CATEGORY_ID );
             getProductId=bundle.getInt( Constants.PRODUCT_ID );
 
@@ -327,7 +328,42 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         }
         if(v.equals( bSaveProduct ))
         {
-            uploadImage();
+            if(filePath==null)
+            {
+                if(etProductTitle.getText().toString().length()==0 )
+                {
+                   etProductTitle.setError( "Product name is required!");
+                }
+                else if(etProductPrice.getText().toString().length()==0)
+                {
+                    etProductPrice.setError( "Product price is required!");
+                }
+                else if(etProductSalePrice.getText().toString().length()==0)
+                {
+                    etProductSalePrice.setError( "Product Sale price is required!");
+                }
+                else {
+                      updateProductWithSamePicture();
+                }
+            }
+            else
+            {
+                if(etProductTitle.getText().toString().length()==0 )
+                {
+                    etProductTitle.setError( "Product name is required!");
+                }
+                else if(etProductPrice.getText().toString().length()==0)
+                {
+                    etProductPrice.setError( "Product price is required!");
+                }
+                else if(etProductSalePrice.getText().toString().length()==0)
+                {
+                    etProductSalePrice.setError( "Product Sale price is required!");
+                }
+                else {
+                    uploadImage();
+                }
+            }
 
         }
 
@@ -439,6 +475,36 @@ public class ProductEditActivity extends AppCompatActivity implements View.OnCli
         progressDialog.show();
         categoryList.add( new Category( getCategoryId) );
         imageList.add( new Image( dowanloadImageUri ) );
+
+        ServerController.getInstance().updateProductCall(getProductId, new InsertProductData(etProductTitle.getText().toString(), "simple",
+                etProductPrice.getText().toString(), etProductSalePrice.getText().toString(), null,null, categoryList, imageList), new ServerRequestCallback<AllProductsDatum>() {
+            @Override
+            public void onSuccess(ServerRequest request, ArrayList<AllProductsDatum> data, AllProductsDatum dataJson) {
+
+                progressDialog.dismiss();
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllProductsFragment() ).commit();
+                Log.d(TAG, "onSuccess: ( UPDATE PRODUCT API )-( UPDATE PRODUCT DESCRIPTION ): " + dataJson.getDescription() );
+                Log.d(TAG, "onSuccess: ( UPDATE PRODUCT API )-( UPDATE PRODUCT IMAGE ): " + dataJson.getImages().get(0).getSrc());
+
+            }
+
+            @Override
+            public void onFailure(ServerRequest request, Error error) {
+
+                Log.d(TAG, "onFailure: (UPDATE PRODUCT API )-(FAILURE) ");
+                progressDialog.dismiss();
+
+            }
+        });
+
+    }
+    private void updateProductWithSamePicture() {
+
+        progressDialog.setMessage(getString(R.string.updating_product));
+        progressDialog.show();
+        categoryList.add( new Category( getCategoryId) );
+        imageList.add( new Image( changProductImage ) );
 
         ServerController.getInstance().updateProductCall(getProductId, new InsertProductData(etProductTitle.getText().toString(), "simple",
                 etProductPrice.getText().toString(), etProductSalePrice.getText().toString(), null,null, categoryList, imageList), new ServerRequestCallback<AllProductsDatum>() {

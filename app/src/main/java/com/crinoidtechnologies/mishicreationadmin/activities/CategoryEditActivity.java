@@ -153,18 +153,30 @@ public class CategoryEditActivity extends AppCompatActivity implements View.OnCl
         if (v.equals( bChangeImage )) {
 
             openGallaryAndCamera();
-
-
         }
         if (v.equals( bSaveCategory )) {
             Log.d( TAG, "onClick: save Button " );
-            if(etChangeTitle.getText().toString().length()==0 )
+            if(filePath==null)
             {
-                etChangeTitle.setError( "Category name is required!");
+                if(etChangeTitle.getText().toString().length()==0 )
+                {
+                    etChangeTitle.setError( "Category name is required!");
+                }
+                else {
+                    updateCategoryWithSameImage();
+                }
             }
-            else {
-                uploadImage();
+            else
+            {
+                if(etChangeTitle.getText().toString().length()==0 )
+                {
+                    etChangeTitle.setError( "Category name is required!");
+                }
+                else {
+                    uploadImage();
+                }
             }
+
 
         }
         if (v.equals( bDeleteCategory )) {
@@ -361,6 +373,7 @@ public class CategoryEditActivity extends AppCompatActivity implements View.OnCl
                         }
                     } );
         }
+
     }
 
     private void createCategory() {
@@ -438,7 +451,35 @@ public class CategoryEditActivity extends AppCompatActivity implements View.OnCl
                 new InsertCategoryData( etChangeTitle.getText().toString(), new Image( dowanloadImageUri ), "A relevant Product" ), new ServerRequestCallback<AllCategoryDatum>() {
                     @Override
                     public void onSuccess(ServerRequest request, ArrayList<AllCategoryDatum> data, AllCategoryDatum dataJson) {
+                        progressDialog.dismiss();
+                        Log.d( TAG, "onSuccess: ( UPDATE CATEGORY API )-( UPDATE CATEGORY DESCRIPTION ): " + dataJson.getDescription() );
+//                        Log.d(TAG, "onSuccess: ( UPDATE CATEGORY API )-( UPDATE CATEGORY IMAGE ): " + dataJson.getImage().getSrc());
 
+                        fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace( R.id.fl_Container, new AllCategoryFragment() ).commit();
+                    }
+
+                    @Override
+                    public void onFailure(ServerRequest request, Error error) {
+
+                        Log.d( TAG, "onFailure: (UPDATE CATEGORY API )-(FAILURE) " );
+                        progressDialog.dismiss();
+
+                    }
+                }
+        );
+
+    }
+    private void updateCategoryWithSameImage() {
+        Toast.makeText( CategoryEditActivity.this, R.string.update_sucessfully, Toast.LENGTH_SHORT ).show();
+        progressDialog.setTitle( R.string.update_sucessfully );
+        progressDialog.show();
+
+
+        ServerController.getInstance().updateCategoryCall( getId,
+                new InsertCategoryData( etChangeTitle.getText().toString(), new Image( changeImage ), "A relevant Product" ), new ServerRequestCallback<AllCategoryDatum>() {
+                    @Override
+                    public void onSuccess(ServerRequest request, ArrayList<AllCategoryDatum> data, AllCategoryDatum dataJson) {
                         progressDialog.dismiss();
                         Log.d( TAG, "onSuccess: ( UPDATE CATEGORY API )-( UPDATE CATEGORY DESCRIPTION ): " + dataJson.getDescription() );
 //                        Log.d(TAG, "onSuccess: ( UPDATE CATEGORY API )-( UPDATE CATEGORY IMAGE ): " + dataJson.getImage().getSrc());
